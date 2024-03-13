@@ -4,13 +4,13 @@ use ieee.std_logic_arith.all;
 
 entity channel is
     generic (
-        carry4_count : integer := 4;
+        carry4_count : integer := 8;
         n_output_bits : integer := 8
     );
     port (
         clk : in std_logic;
         signal_in : in std_logic;
-        signal_out : out std_logic_vector(n_output_bits-1 downto 0)
+        signal_out : out std_logic(n_output_bits-1 downto 0)
     );
 end entity channel;
 
@@ -58,7 +58,7 @@ begin
     encoder_inst : encoder
         generic map (
             n_bits_bin => n_output_bits,
-            n_bits_therm => 4*carry4_count 
+            n_bits_therm => carry4_count*4
         )
         port map (
             clk => clk,

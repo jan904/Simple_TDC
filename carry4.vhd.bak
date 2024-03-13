@@ -36,10 +36,9 @@ begin
         );
     end generate instan_fa;
 
-    Cout_vector(0) <= carry(1);
-    Cout_vector(1) <= carry(2);
-    Cout_vector(2) <= carry(3);
-    Cout_vector(3) <= carry(4);
+    Cout_vector <= carry(1 to 4);
+    
+
     
 end architecture rtl;
 

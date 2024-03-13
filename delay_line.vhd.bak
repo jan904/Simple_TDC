@@ -1,0 +1,58 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity delay_line is
+    generic (
+        length : natural := 8
+        stages : integer := 8
+    );
+    port (
+        trigger : in std_logic;
+        clock : in std_logic;
+        output : out std_logic_vector(stages-1 downto 0)
+    );
+end delay_line;
+
+architecture rtl of delay_line is
+
+    component carry4
+        port (
+            a, b : in std_logic_vector(width-1 downto 0);
+            Cin : in std_logic;
+            trigger : in std_logic;
+            Cout_vector : out std_logic_vector(width-1 downto 0)
+        );
+    end component;
+
+    signal unreg : std_logic_vector(stages-1 downto 0);
+
+begin
+    carry_delay_line: for i in 0 to stages/4 - 1 generate
+        first_carry4: if i = 0 generate
+        begin
+            delayblock: carry4
+                port map (
+                    trigger => trigger,
+                    a => "0000",
+                    b => "1111",
+                    Cin => '0',
+                    Cout_vector => unreg(3 downto 0)
+                );
+        end generate first_carry4;
+
+        next_carry4: if i > 0 generate
+        begin
+            delayblock: carry4
+                port map (
+                    trigger => '0',
+                    a => "0000",
+                    b => "1111",
+                    Cin => unreg(4*i-1),
+                    Cout_vector => unreg(4*(i+1)-1 downto 4*i)
+                );
+        end generate next_carry4;
+    end generate;
+
+end architecture rtl;
+      
