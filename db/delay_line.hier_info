@@ -1,88 +1,71 @@
-|delay_line
-trigger => carry4:carry_delay_line:0:first_carry4:delayblock.trigger
-clock => fdr:latch:0:ff.clk
-clock => fdr:latch:1:ff.clk
-clock => fdr:latch:2:ff.clk
-clock => fdr:latch:3:ff.clk
-clock => fdr:latch:4:ff.clk
-clock => fdr:latch:5:ff.clk
-clock => fdr:latch:6:ff.clk
-clock => fdr:latch:7:ff.clk
-clock => fdr:latch:8:ff.clk
-clock => fdr:latch:9:ff.clk
-clock => fdr:latch:10:ff.clk
-clock => fdr:latch:11:ff.clk
-clock => fdr:latch:12:ff.clk
-clock => fdr:latch:13:ff.clk
-clock => fdr:latch:14:ff.clk
-clock => fdr:latch:15:ff.clk
-clock => fdr:latch:16:ff.clk
-clock => fdr:latch:17:ff.clk
-clock => fdr:latch:18:ff.clk
-clock => fdr:latch:19:ff.clk
-clock => fdr:latch:20:ff.clk
-clock => fdr:latch:21:ff.clk
-clock => fdr:latch:22:ff.clk
-clock => fdr:latch:23:ff.clk
-clock => fdr:latch:24:ff.clk
-clock => fdr:latch:25:ff.clk
-clock => fdr:latch:26:ff.clk
-clock => fdr:latch:27:ff.clk
-clock => fdr:latch:28:ff.clk
-clock => fdr:latch:29:ff.clk
-clock => fdr:latch:30:ff.clk
-clock => fdr:latch:31:ff.clk
-clock => fdr:latch:32:ff.clk
-clock => fdr:latch:33:ff.clk
-clock => fdr:latch:34:ff.clk
-clock => fdr:latch:35:ff.clk
-clock => fdr:latch:36:ff.clk
-clock => fdr:latch:37:ff.clk
-clock => fdr:latch:38:ff.clk
-clock => fdr:latch:39:ff.clk
-output[0] << fdr:latch:0:ff.q
-output[1] << fdr:latch:1:ff.q
-output[2] << fdr:latch:2:ff.q
-output[3] << fdr:latch:3:ff.q
-output[4] << fdr:latch:4:ff.q
-output[5] << fdr:latch:5:ff.q
-output[6] << fdr:latch:6:ff.q
-output[7] << fdr:latch:7:ff.q
-output[8] << fdr:latch:8:ff.q
-output[9] << fdr:latch:9:ff.q
-output[10] << fdr:latch:10:ff.q
-output[11] << fdr:latch:11:ff.q
-output[12] << fdr:latch:12:ff.q
-output[13] << fdr:latch:13:ff.q
-output[14] << fdr:latch:14:ff.q
-output[15] << fdr:latch:15:ff.q
-output[16] << fdr:latch:16:ff.q
-output[17] << fdr:latch:17:ff.q
-output[18] << fdr:latch:18:ff.q
-output[19] << fdr:latch:19:ff.q
-output[20] << fdr:latch:20:ff.q
-output[21] << fdr:latch:21:ff.q
-output[22] << fdr:latch:22:ff.q
-output[23] << fdr:latch:23:ff.q
-output[24] << fdr:latch:24:ff.q
-output[25] << fdr:latch:25:ff.q
-output[26] << fdr:latch:26:ff.q
-output[27] << fdr:latch:27:ff.q
-output[28] << fdr:latch:28:ff.q
-output[29] << fdr:latch:29:ff.q
-output[30] << fdr:latch:30:ff.q
-output[31] << fdr:latch:31:ff.q
-output[32] << fdr:latch:32:ff.q
-output[33] << fdr:latch:33:ff.q
-output[34] << fdr:latch:34:ff.q
-output[35] << fdr:latch:35:ff.q
-output[36] << fdr:latch:36:ff.q
-output[37] << fdr:latch:37:ff.q
-output[38] << fdr:latch:38:ff.q
-output[39] << fdr:latch:39:ff.q
+|channel
+clk => delay_line:delay_line_inst.clock
+clk => encoder:encoder_inst.clk
+signal_in => delay_line:delay_line_inst.trigger
+signal_out[0] << encoder:encoder_inst.count_o[0]
+signal_out[1] << encoder:encoder_inst.count_o[1]
+signal_out[2] << encoder:encoder_inst.count_o[2]
+signal_out[3] << encoder:encoder_inst.count_o[3]
+signal_out[4] << encoder:encoder_inst.count_o[4]
+signal_out[5] << encoder:encoder_inst.count_o[5]
+signal_out[6] << encoder:encoder_inst.count_o[6]
+signal_out[7] << encoder:encoder_inst.count_o[7]
 
 
-|delay_line|carry4:\carry_delay_line:0:first_carry4:delayblock
+|channel|delay_line:delay_line_inst
+trigger => carry4:carry_delay_line:0:first_carry4:delayblock.Cin
+clock => fdr:latch_1:0:ff.clk
+clock => rst.CLK
+clock => fdr:latch_1:1:ff.clk
+clock => fdr:latch_1:2:ff.clk
+clock => fdr:latch_1:3:ff.clk
+clock => fdr:latch_1:4:ff.clk
+clock => fdr:latch_1:5:ff.clk
+clock => fdr:latch_1:6:ff.clk
+clock => fdr:latch_1:7:ff.clk
+clock => fdr:latch_1:8:ff.clk
+clock => fdr:latch_1:9:ff.clk
+clock => fdr:latch_1:10:ff.clk
+clock => fdr:latch_1:11:ff.clk
+clock => fdr:latch_1:12:ff.clk
+clock => fdr:latch_1:13:ff.clk
+clock => fdr:latch_1:14:ff.clk
+clock => fdr:latch_1:15:ff.clk
+clock => fdr:latch_2:0:ff.clk
+clock => fdr:latch_2:1:ff.clk
+clock => fdr:latch_2:2:ff.clk
+clock => fdr:latch_2:3:ff.clk
+clock => fdr:latch_2:4:ff.clk
+clock => fdr:latch_2:5:ff.clk
+clock => fdr:latch_2:6:ff.clk
+clock => fdr:latch_2:7:ff.clk
+clock => fdr:latch_2:8:ff.clk
+clock => fdr:latch_2:9:ff.clk
+clock => fdr:latch_2:10:ff.clk
+clock => fdr:latch_2:11:ff.clk
+clock => fdr:latch_2:12:ff.clk
+clock => fdr:latch_2:13:ff.clk
+clock => fdr:latch_2:14:ff.clk
+clock => fdr:latch_2:15:ff.clk
+output[0] <= fdr:latch_2:0:ff.q
+output[1] <= fdr:latch_2:1:ff.q
+output[2] <= fdr:latch_2:2:ff.q
+output[3] <= fdr:latch_2:3:ff.q
+output[4] <= fdr:latch_2:4:ff.q
+output[5] <= fdr:latch_2:5:ff.q
+output[6] <= fdr:latch_2:6:ff.q
+output[7] <= fdr:latch_2:7:ff.q
+output[8] <= fdr:latch_2:8:ff.q
+output[9] <= fdr:latch_2:9:ff.q
+output[10] <= fdr:latch_2:10:ff.q
+output[11] <= fdr:latch_2:11:ff.q
+output[12] <= fdr:latch_2:12:ff.q
+output[13] <= fdr:latch_2:13:ff.q
+output[14] <= fdr:latch_2:14:ff.q
+output[15] <= fdr:latch_2:15:ff.q
+
+
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock
 a[0] => full_add:instan_fa:0:fa.a
 a[1] => full_add:instan_fa:1:fa.a
 a[2] => full_add:instan_fa:2:fa.a
@@ -91,51 +74,50 @@ b[0] => full_add:instan_fa:0:fa.b
 b[1] => full_add:instan_fa:1:fa.b
 b[2] => full_add:instan_fa:2:fa.b
 b[3] => full_add:instan_fa:3:fa.b
-Cin => carry[0].IN0
-trigger => carry[0].IN1
+Cin => full_add:instan_fa:0:fa.Cin
 Cout_vector[0] <= full_add:instan_fa:0:fa.Cout
 Cout_vector[1] <= full_add:instan_fa:1:fa.Cout
 Cout_vector[2] <= full_add:instan_fa:2:fa.Cout
 Cout_vector[3] <= full_add:instan_fa:3:fa.Cout
 
 
-|delay_line|carry4:\carry_delay_line:0:first_carry4:delayblock|full_add:\instan_fa:0:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock|full_add:\instan_fa:0:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:0:first_carry4:delayblock|full_add:\instan_fa:1:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock|full_add:\instan_fa:1:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:0:first_carry4:delayblock|full_add:\instan_fa:2:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock|full_add:\instan_fa:2:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:0:first_carry4:delayblock|full_add:\instan_fa:3:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock|full_add:\instan_fa:3:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:1:next_carry4:delayblock
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:1:next_carry4:delayblock
 a[0] => full_add:instan_fa:0:fa.a
 a[1] => full_add:instan_fa:1:fa.a
 a[2] => full_add:instan_fa:2:fa.a
@@ -144,51 +126,50 @@ b[0] => full_add:instan_fa:0:fa.b
 b[1] => full_add:instan_fa:1:fa.b
 b[2] => full_add:instan_fa:2:fa.b
 b[3] => full_add:instan_fa:3:fa.b
-Cin => carry[0].IN0
-trigger => carry[0].IN1
+Cin => full_add:instan_fa:0:fa.Cin
 Cout_vector[0] <= full_add:instan_fa:0:fa.Cout
 Cout_vector[1] <= full_add:instan_fa:1:fa.Cout
 Cout_vector[2] <= full_add:instan_fa:2:fa.Cout
 Cout_vector[3] <= full_add:instan_fa:3:fa.Cout
 
 
-|delay_line|carry4:\carry_delay_line:1:next_carry4:delayblock|full_add:\instan_fa:0:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:1:next_carry4:delayblock|full_add:\instan_fa:0:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:1:next_carry4:delayblock|full_add:\instan_fa:1:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:1:next_carry4:delayblock|full_add:\instan_fa:1:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:1:next_carry4:delayblock|full_add:\instan_fa:2:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:1:next_carry4:delayblock|full_add:\instan_fa:2:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:1:next_carry4:delayblock|full_add:\instan_fa:3:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:1:next_carry4:delayblock|full_add:\instan_fa:3:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:2:next_carry4:delayblock
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:2:next_carry4:delayblock
 a[0] => full_add:instan_fa:0:fa.a
 a[1] => full_add:instan_fa:1:fa.a
 a[2] => full_add:instan_fa:2:fa.a
@@ -197,51 +178,50 @@ b[0] => full_add:instan_fa:0:fa.b
 b[1] => full_add:instan_fa:1:fa.b
 b[2] => full_add:instan_fa:2:fa.b
 b[3] => full_add:instan_fa:3:fa.b
-Cin => carry[0].IN0
-trigger => carry[0].IN1
+Cin => full_add:instan_fa:0:fa.Cin
 Cout_vector[0] <= full_add:instan_fa:0:fa.Cout
 Cout_vector[1] <= full_add:instan_fa:1:fa.Cout
 Cout_vector[2] <= full_add:instan_fa:2:fa.Cout
 Cout_vector[3] <= full_add:instan_fa:3:fa.Cout
 
 
-|delay_line|carry4:\carry_delay_line:2:next_carry4:delayblock|full_add:\instan_fa:0:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:2:next_carry4:delayblock|full_add:\instan_fa:0:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:2:next_carry4:delayblock|full_add:\instan_fa:1:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:2:next_carry4:delayblock|full_add:\instan_fa:1:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:2:next_carry4:delayblock|full_add:\instan_fa:2:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:2:next_carry4:delayblock|full_add:\instan_fa:2:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:2:next_carry4:delayblock|full_add:\instan_fa:3:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:2:next_carry4:delayblock|full_add:\instan_fa:3:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:3:next_carry4:delayblock
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:3:next_carry4:delayblock
 a[0] => full_add:instan_fa:0:fa.a
 a[1] => full_add:instan_fa:1:fa.a
 a[2] => full_add:instan_fa:2:fa.a
@@ -250,605 +230,390 @@ b[0] => full_add:instan_fa:0:fa.b
 b[1] => full_add:instan_fa:1:fa.b
 b[2] => full_add:instan_fa:2:fa.b
 b[3] => full_add:instan_fa:3:fa.b
-Cin => carry[0].IN0
-trigger => carry[0].IN1
+Cin => full_add:instan_fa:0:fa.Cin
 Cout_vector[0] <= full_add:instan_fa:0:fa.Cout
 Cout_vector[1] <= full_add:instan_fa:1:fa.Cout
 Cout_vector[2] <= full_add:instan_fa:2:fa.Cout
 Cout_vector[3] <= full_add:instan_fa:3:fa.Cout
 
 
-|delay_line|carry4:\carry_delay_line:3:next_carry4:delayblock|full_add:\instan_fa:0:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:3:next_carry4:delayblock|full_add:\instan_fa:0:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:3:next_carry4:delayblock|full_add:\instan_fa:1:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:3:next_carry4:delayblock|full_add:\instan_fa:1:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:3:next_carry4:delayblock|full_add:\instan_fa:2:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:3:next_carry4:delayblock|full_add:\instan_fa:2:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:3:next_carry4:delayblock|full_add:\instan_fa:3:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
+|channel|delay_line:delay_line_inst|carry4:\carry_delay_line:3:next_carry4:delayblock|full_add:\instan_fa:3:fa
+a => Cout.IN0
+a => Cout.IN0
+b => Cout.IN1
+b => Cout.IN1
+Cin => Cout.IN1
 Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|carry4:\carry_delay_line:4:next_carry4:delayblock
-a[0] => full_add:instan_fa:0:fa.a
-a[1] => full_add:instan_fa:1:fa.a
-a[2] => full_add:instan_fa:2:fa.a
-a[3] => full_add:instan_fa:3:fa.a
-b[0] => full_add:instan_fa:0:fa.b
-b[1] => full_add:instan_fa:1:fa.b
-b[2] => full_add:instan_fa:2:fa.b
-b[3] => full_add:instan_fa:3:fa.b
-Cin => carry[0].IN0
-trigger => carry[0].IN1
-Cout_vector[0] <= full_add:instan_fa:0:fa.Cout
-Cout_vector[1] <= full_add:instan_fa:1:fa.Cout
-Cout_vector[2] <= full_add:instan_fa:2:fa.Cout
-Cout_vector[3] <= full_add:instan_fa:3:fa.Cout
-
-
-|delay_line|carry4:\carry_delay_line:4:next_carry4:delayblock|full_add:\instan_fa:0:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:4:next_carry4:delayblock|full_add:\instan_fa:1:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:4:next_carry4:delayblock|full_add:\instan_fa:2:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:4:next_carry4:delayblock|full_add:\instan_fa:3:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:5:next_carry4:delayblock
-a[0] => full_add:instan_fa:0:fa.a
-a[1] => full_add:instan_fa:1:fa.a
-a[2] => full_add:instan_fa:2:fa.a
-a[3] => full_add:instan_fa:3:fa.a
-b[0] => full_add:instan_fa:0:fa.b
-b[1] => full_add:instan_fa:1:fa.b
-b[2] => full_add:instan_fa:2:fa.b
-b[3] => full_add:instan_fa:3:fa.b
-Cin => carry[0].IN0
-trigger => carry[0].IN1
-Cout_vector[0] <= full_add:instan_fa:0:fa.Cout
-Cout_vector[1] <= full_add:instan_fa:1:fa.Cout
-Cout_vector[2] <= full_add:instan_fa:2:fa.Cout
-Cout_vector[3] <= full_add:instan_fa:3:fa.Cout
-
-
-|delay_line|carry4:\carry_delay_line:5:next_carry4:delayblock|full_add:\instan_fa:0:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:5:next_carry4:delayblock|full_add:\instan_fa:1:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:5:next_carry4:delayblock|full_add:\instan_fa:2:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:5:next_carry4:delayblock|full_add:\instan_fa:3:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:6:next_carry4:delayblock
-a[0] => full_add:instan_fa:0:fa.a
-a[1] => full_add:instan_fa:1:fa.a
-a[2] => full_add:instan_fa:2:fa.a
-a[3] => full_add:instan_fa:3:fa.a
-b[0] => full_add:instan_fa:0:fa.b
-b[1] => full_add:instan_fa:1:fa.b
-b[2] => full_add:instan_fa:2:fa.b
-b[3] => full_add:instan_fa:3:fa.b
-Cin => carry[0].IN0
-trigger => carry[0].IN1
-Cout_vector[0] <= full_add:instan_fa:0:fa.Cout
-Cout_vector[1] <= full_add:instan_fa:1:fa.Cout
-Cout_vector[2] <= full_add:instan_fa:2:fa.Cout
-Cout_vector[3] <= full_add:instan_fa:3:fa.Cout
-
-
-|delay_line|carry4:\carry_delay_line:6:next_carry4:delayblock|full_add:\instan_fa:0:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:6:next_carry4:delayblock|full_add:\instan_fa:1:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:6:next_carry4:delayblock|full_add:\instan_fa:2:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:6:next_carry4:delayblock|full_add:\instan_fa:3:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:7:next_carry4:delayblock
-a[0] => full_add:instan_fa:0:fa.a
-a[1] => full_add:instan_fa:1:fa.a
-a[2] => full_add:instan_fa:2:fa.a
-a[3] => full_add:instan_fa:3:fa.a
-b[0] => full_add:instan_fa:0:fa.b
-b[1] => full_add:instan_fa:1:fa.b
-b[2] => full_add:instan_fa:2:fa.b
-b[3] => full_add:instan_fa:3:fa.b
-Cin => carry[0].IN0
-trigger => carry[0].IN1
-Cout_vector[0] <= full_add:instan_fa:0:fa.Cout
-Cout_vector[1] <= full_add:instan_fa:1:fa.Cout
-Cout_vector[2] <= full_add:instan_fa:2:fa.Cout
-Cout_vector[3] <= full_add:instan_fa:3:fa.Cout
-
-
-|delay_line|carry4:\carry_delay_line:7:next_carry4:delayblock|full_add:\instan_fa:0:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:7:next_carry4:delayblock|full_add:\instan_fa:1:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:7:next_carry4:delayblock|full_add:\instan_fa:2:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:7:next_carry4:delayblock|full_add:\instan_fa:3:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:8:next_carry4:delayblock
-a[0] => full_add:instan_fa:0:fa.a
-a[1] => full_add:instan_fa:1:fa.a
-a[2] => full_add:instan_fa:2:fa.a
-a[3] => full_add:instan_fa:3:fa.a
-b[0] => full_add:instan_fa:0:fa.b
-b[1] => full_add:instan_fa:1:fa.b
-b[2] => full_add:instan_fa:2:fa.b
-b[3] => full_add:instan_fa:3:fa.b
-Cin => carry[0].IN0
-trigger => carry[0].IN1
-Cout_vector[0] <= full_add:instan_fa:0:fa.Cout
-Cout_vector[1] <= full_add:instan_fa:1:fa.Cout
-Cout_vector[2] <= full_add:instan_fa:2:fa.Cout
-Cout_vector[3] <= full_add:instan_fa:3:fa.Cout
-
-
-|delay_line|carry4:\carry_delay_line:8:next_carry4:delayblock|full_add:\instan_fa:0:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:8:next_carry4:delayblock|full_add:\instan_fa:1:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:8:next_carry4:delayblock|full_add:\instan_fa:2:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:8:next_carry4:delayblock|full_add:\instan_fa:3:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:9:next_carry4:delayblock
-a[0] => full_add:instan_fa:0:fa.a
-a[1] => full_add:instan_fa:1:fa.a
-a[2] => full_add:instan_fa:2:fa.a
-a[3] => full_add:instan_fa:3:fa.a
-b[0] => full_add:instan_fa:0:fa.b
-b[1] => full_add:instan_fa:1:fa.b
-b[2] => full_add:instan_fa:2:fa.b
-b[3] => full_add:instan_fa:3:fa.b
-Cin => carry[0].IN0
-trigger => carry[0].IN1
-Cout_vector[0] <= full_add:instan_fa:0:fa.Cout
-Cout_vector[1] <= full_add:instan_fa:1:fa.Cout
-Cout_vector[2] <= full_add:instan_fa:2:fa.Cout
-Cout_vector[3] <= full_add:instan_fa:3:fa.Cout
-
-
-|delay_line|carry4:\carry_delay_line:9:next_carry4:delayblock|full_add:\instan_fa:0:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:9:next_carry4:delayblock|full_add:\instan_fa:1:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:9:next_carry4:delayblock|full_add:\instan_fa:2:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|carry4:\carry_delay_line:9:next_carry4:delayblock|full_add:\instan_fa:3:fa
-a => and1.IN0
-a => xor1.IN0
-b => and1.IN1
-b => xor1.IN1
-Cin => and2.IN1
-Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|fdr:\latch:0:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:0:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:1:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:1:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:2:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:2:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:3:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:3:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:4:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:4:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:5:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:5:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:6:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:6:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:7:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:7:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:8:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:8:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:9:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:9:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:10:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:10:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:11:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:11:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:12:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:12:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:13:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:13:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:14:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:14:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:15:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_1:15:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:16:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:0:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:17:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:1:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:18:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:2:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:19:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:3:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:20:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:4:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:21:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:5:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:22:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:6:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:23:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:7:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:24:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:8:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:25:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:9:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:26:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:10:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:27:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:11:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:28:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:12:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:29:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:13:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:30:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:14:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:31:ff
+|channel|delay_line:delay_line_inst|fdr:\latch_2:15:ff
+rst => q~reg0.ACLR
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
-|delay_line|fdr:\latch:32:ff
-clk => q~reg0.CLK
-t => q~reg0.DATAIN
-q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|fdr:\latch:33:ff
-clk => q~reg0.CLK
-t => q~reg0.DATAIN
-q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|fdr:\latch:34:ff
-clk => q~reg0.CLK
-t => q~reg0.DATAIN
-q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|fdr:\latch:35:ff
-clk => q~reg0.CLK
-t => q~reg0.DATAIN
-q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|fdr:\latch:36:ff
-clk => q~reg0.CLK
-t => q~reg0.DATAIN
-q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|fdr:\latch:37:ff
-clk => q~reg0.CLK
-t => q~reg0.DATAIN
-q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|fdr:\latch:38:ff
-clk => q~reg0.CLK
-t => q~reg0.DATAIN
-q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
-
-
-|delay_line|fdr:\latch:39:ff
-clk => q~reg0.CLK
-t => q~reg0.DATAIN
-q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
+|channel|encoder:encoder_inst
+clk => count_o[0]~reg0.CLK
+clk => count_o[1]~reg0.CLK
+clk => count_o[2]~reg0.CLK
+clk => count_o[3]~reg0.CLK
+clk => count_o[4]~reg0.CLK
+clk => count_o[5]~reg0.CLK
+clk => count_o[6]~reg0.CLK
+clk => count_o[7]~reg0.CLK
+thermometer[0] => Add0.IN2
+thermometer[0] => count.DATAA
+thermometer[1] => count.OUTPUTSELECT
+thermometer[1] => count.OUTPUTSELECT
+thermometer[2] => count.OUTPUTSELECT
+thermometer[2] => count.OUTPUTSELECT
+thermometer[2] => count.OUTPUTSELECT
+thermometer[3] => count.OUTPUTSELECT
+thermometer[3] => count.OUTPUTSELECT
+thermometer[3] => count.OUTPUTSELECT
+thermometer[3] => count.OUTPUTSELECT
+thermometer[4] => count.OUTPUTSELECT
+thermometer[4] => count.OUTPUTSELECT
+thermometer[4] => count.OUTPUTSELECT
+thermometer[4] => count.OUTPUTSELECT
+thermometer[4] => count.OUTPUTSELECT
+thermometer[5] => count.OUTPUTSELECT
+thermometer[5] => count.OUTPUTSELECT
+thermometer[5] => count.OUTPUTSELECT
+thermometer[5] => count.OUTPUTSELECT
+thermometer[5] => count.OUTPUTSELECT
+thermometer[5] => count.OUTPUTSELECT
+thermometer[6] => count.OUTPUTSELECT
+thermometer[6] => count.OUTPUTSELECT
+thermometer[6] => count.OUTPUTSELECT
+thermometer[6] => count.OUTPUTSELECT
+thermometer[6] => count.OUTPUTSELECT
+thermometer[6] => count.OUTPUTSELECT
+thermometer[6] => count.OUTPUTSELECT
+thermometer[7] => count.OUTPUTSELECT
+thermometer[7] => count.OUTPUTSELECT
+thermometer[7] => count.OUTPUTSELECT
+thermometer[7] => count.OUTPUTSELECT
+thermometer[7] => count.OUTPUTSELECT
+thermometer[7] => count.OUTPUTSELECT
+thermometer[7] => count.OUTPUTSELECT
+thermometer[7] => count.OUTPUTSELECT
+thermometer[8] => count.OUTPUTSELECT
+thermometer[8] => count.OUTPUTSELECT
+thermometer[8] => count.OUTPUTSELECT
+thermometer[8] => count.OUTPUTSELECT
+thermometer[8] => count.OUTPUTSELECT
+thermometer[8] => count.OUTPUTSELECT
+thermometer[8] => count.OUTPUTSELECT
+thermometer[8] => count.OUTPUTSELECT
+thermometer[9] => count.OUTPUTSELECT
+thermometer[9] => count.OUTPUTSELECT
+thermometer[9] => count.OUTPUTSELECT
+thermometer[9] => count.OUTPUTSELECT
+thermometer[9] => count.OUTPUTSELECT
+thermometer[9] => count.OUTPUTSELECT
+thermometer[9] => count.OUTPUTSELECT
+thermometer[9] => count.OUTPUTSELECT
+thermometer[10] => count.OUTPUTSELECT
+thermometer[10] => count.OUTPUTSELECT
+thermometer[10] => count.OUTPUTSELECT
+thermometer[10] => count.OUTPUTSELECT
+thermometer[10] => count.OUTPUTSELECT
+thermometer[10] => count.OUTPUTSELECT
+thermometer[10] => count.OUTPUTSELECT
+thermometer[10] => count.OUTPUTSELECT
+thermometer[11] => count.OUTPUTSELECT
+thermometer[11] => count.OUTPUTSELECT
+thermometer[11] => count.OUTPUTSELECT
+thermometer[11] => count.OUTPUTSELECT
+thermometer[11] => count.OUTPUTSELECT
+thermometer[11] => count.OUTPUTSELECT
+thermometer[11] => count.OUTPUTSELECT
+thermometer[11] => count.OUTPUTSELECT
+thermometer[12] => count.OUTPUTSELECT
+thermometer[12] => count.OUTPUTSELECT
+thermometer[12] => count.OUTPUTSELECT
+thermometer[12] => count.OUTPUTSELECT
+thermometer[12] => count.OUTPUTSELECT
+thermometer[12] => count.OUTPUTSELECT
+thermometer[12] => count.OUTPUTSELECT
+thermometer[12] => count.OUTPUTSELECT
+thermometer[13] => count.OUTPUTSELECT
+thermometer[13] => count.OUTPUTSELECT
+thermometer[13] => count.OUTPUTSELECT
+thermometer[13] => count.OUTPUTSELECT
+thermometer[13] => count.OUTPUTSELECT
+thermometer[13] => count.OUTPUTSELECT
+thermometer[13] => count.OUTPUTSELECT
+thermometer[13] => count.OUTPUTSELECT
+thermometer[14] => count.OUTPUTSELECT
+thermometer[14] => count.OUTPUTSELECT
+thermometer[14] => count.OUTPUTSELECT
+thermometer[14] => count.OUTPUTSELECT
+thermometer[14] => count.OUTPUTSELECT
+thermometer[14] => count.OUTPUTSELECT
+thermometer[14] => count.OUTPUTSELECT
+thermometer[14] => count.OUTPUTSELECT
+thermometer[15] => count.OUTPUTSELECT
+thermometer[15] => count.OUTPUTSELECT
+thermometer[15] => count.OUTPUTSELECT
+thermometer[15] => count.OUTPUTSELECT
+thermometer[15] => count.OUTPUTSELECT
+thermometer[15] => count.OUTPUTSELECT
+thermometer[15] => count.OUTPUTSELECT
+thermometer[15] => count.OUTPUTSELECT
+count_o[0] <= count_o[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+count_o[1] <= count_o[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+count_o[2] <= count_o[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+count_o[3] <= count_o[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+count_o[4] <= count_o[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+count_o[5] <= count_o[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+count_o[6] <= count_o[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+count_o[7] <= count_o[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 

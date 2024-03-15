@@ -26,20 +26,44 @@
 # Copying /programs/quartus/quartus_23_1/questa_fse/linux_x86_64/../modelsim.ini to modelsim.ini
 # Modifying modelsim.ini
 # 
+# vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/channel.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2023.3 Compiler 2023.07 Jul 17 2023
+# Start time: 14:36:18 on Mar 15,2024
+# vcom -reportprogress 300 -93 -work work /misc/home/mue/hoefer/quartus/simple_delay_line/channel.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package std_logic_arith
+# -- Compiling entity channel
+# -- Compiling architecture rtl of channel
+# End time: 14:36:18 on Mar 15,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd}
+# Questa Intel Starter FPGA Edition-64 vcom 2023.3 Compiler 2023.07 Jul 17 2023
+# Start time: 14:36:18 on Mar 15,2024
+# vcom -reportprogress 300 -93 -work work /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity encoder
+# -- Compiling architecture rtl of encoder
+# End time: 14:36:18 on Mar 15,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
 # vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd}
 # Questa Intel Starter FPGA Edition-64 vcom 2023.3 Compiler 2023.07 Jul 17 2023
-# Start time: 11:18:37 on Mar 13,2024
+# Start time: 14:36:18 on Mar 15,2024
 # vcom -reportprogress 300 -93 -work work /misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Compiling entity fdr
 # -- Compiling architecture rtl of fdr
-# End time: 11:18:37 on Mar 13,2024, Elapsed time: 0:00:00
+# End time: 14:36:18 on Mar 15,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd}
 # Questa Intel Starter FPGA Edition-64 vcom 2023.3 Compiler 2023.07 Jul 17 2023
-# Start time: 11:18:37 on Mar 13,2024
+# Start time: 14:36:18 on Mar 15,2024
 # vcom -reportprogress 300 -93 -work work /misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -47,22 +71,22 @@
 # -- Loading package std_logic_arith
 # -- Compiling entity carry4
 # -- Compiling architecture rtl of carry4
-# End time: 11:18:37 on Mar 13,2024, Elapsed time: 0:00:00
+# End time: 14:36:18 on Mar 15,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd}
 # Questa Intel Starter FPGA Edition-64 vcom 2023.3 Compiler 2023.07 Jul 17 2023
-# Start time: 11:18:38 on Mar 13,2024
+# Start time: 14:36:18 on Mar 15,2024
 # vcom -reportprogress 300 -93 -work work /misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Compiling entity full_add
 # -- Compiling architecture behavioral of full_add
-# End time: 11:18:38 on Mar 13,2024, Elapsed time: 0:00:00
+# End time: 14:36:19 on Mar 15,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd}
 # Questa Intel Starter FPGA Edition-64 vcom 2023.3 Compiler 2023.07 Jul 17 2023
-# Start time: 11:18:38 on Mar 13,2024
+# Start time: 14:36:19 on Mar 15,2024
 # vcom -reportprogress 300 -93 -work work /misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -70,26 +94,6 @@
 # -- Loading package NUMERIC_STD
 # -- Compiling entity delay_line
 # -- Compiling architecture rtl of delay_line
-# End time: 11:18:38 on Mar 13,2024, Elapsed time: 0:00:00
+# End time: 14:36:19 on Mar 15,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # 
-vsim -i -l msim_transcript work.delay_line
-# vsim -i -l msim_transcript work.delay_line 
-# Start time: 11:18:43 on Mar 13,2024
-# ** Note: (vsim-3812) Design is being optimized...
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading ieee.std_logic_arith(body)
-# Loading work.delay_line(rtl)#1
-# ** Warning: (vsim-3479) Time unit 'ps' is less than the simulator resolution (1ns).
-#    Time: 0 ns  Iteration: 0  Root: /
-add wave -position end  sim:/delay_line/trigger
-add wave -position end  sim:/delay_line/clock
-add wave -position end  sim:/delay_line/unreg
-force -freeze sim:/delay_line/clock 1 0, 0 {50 ns} -r 100
-force -freeze sim:/delay_line/trigger 0 20
-run
-run
-run

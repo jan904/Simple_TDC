@@ -1,5 +1,5 @@
 Flow report for delay_line
-Wed Mar 13 12:07:26 2024
+Fri Mar 15 14:36:03 2024
 Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Standard Edition
 
 
@@ -41,7 +41,7 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------------------+
 ; Flow Summary                                                                            ;
 +------------------------------------+----------------------------------------------------+
-; Flow Status                        ; Flow Failed - Wed Mar 13 12:07:26 2024             ;
+; Flow Status                        ; Successful - Fri Mar 15 14:36:03 2024              ;
 ; Quartus Prime Version              ; 23.1std.0 Build 991 11/28/2023 SC Standard Edition ;
 ; Revision Name                      ; delay_line                                         ;
 ; Top-level Entity Name              ; channel                                            ;
@@ -67,7 +67,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 03/13/2024 12:07:20 ;
+; Start date & time ; 03/15/2024 14:35:55 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; delay_line          ;
 +-------------------+---------------------+
@@ -78,7 +78,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id                        ;
 +-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID               ; 189250945670979.171032804048065        ; --            ; --          ; --                                ;
+; COMPILER_SIGNATURE_ID               ; 189250945670979.171050975522403        ; --            ; --          ; --                                ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_timing           ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_boundary_scan    ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_signal_integrity ;
@@ -105,8 +105,8 @@ https://fpgasoftware.intel.com/eula.
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name            ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Elaboration ; 00:00:06     ; 1.0                     ; 723 MB              ; 00:00:21                           ;
-; Total                  ; 00:00:06     ; --                      ; --                  ; 00:00:21                           ;
+; Analysis & Elaboration ; 00:00:08     ; 1.0                     ; 709 MB              ; 00:00:25                           ;
+; Total                  ; 00:00:08     ; --                      ; --                  ; 00:00:25                           ;
 +------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

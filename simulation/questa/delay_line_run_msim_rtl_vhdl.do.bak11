@@ -5,6 +5,8 @@ if {[file exists rtl_work]} {
 vlib rtl_work
 vmap work rtl_work
 
+vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/channel.vhd}
+vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd}
 vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd}
 vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd}
 vcom -93 -work work {/misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd}

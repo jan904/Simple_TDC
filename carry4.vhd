@@ -6,7 +6,6 @@ entity carry4 is
     port (
         a, b : in std_logic_vector(3 downto 0);
         Cin : in std_logic;
-        trigger : in std_logic;
         Cout_vector : out std_logic_vector(3 downto 0)
     );
 end entity carry4;
@@ -25,7 +24,7 @@ architecture rtl of carry4 is
     end component full_add;
 
 begin
-    carry(0) <= Cin or trigger;
+    carry(0) <= Cin;
     
     instan_fa : for ii in 0 to 3 generate
         fa : full_add port map (

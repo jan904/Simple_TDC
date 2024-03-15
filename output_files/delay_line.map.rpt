@@ -1,5 +1,5 @@
 Analysis & Elaboration report for delay_line
-Wed Mar 13 12:07:26 2024
+Fri Mar 15 14:36:03 2024
 Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Standard Edition
 
 
@@ -9,8 +9,31 @@ Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Standard Edition
   1. Legal Notice
   2. Analysis & Elaboration Summary
   3. Parallel Compilation
-  4. Analysis & Elaboration Settings
-  5. Analysis & Elaboration Messages
+  4. Parameter Settings for User Entity Instance: Top-level Entity: |channel
+  5. Parameter Settings for User Entity Instance: delay_line:delay_line_inst
+  6. Parameter Settings for User Entity Instance: encoder:encoder_inst
+  7. Analysis & Elaboration Settings
+  8. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:15:ff"
+  9. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:14:ff"
+ 10. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:13:ff"
+ 11. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:12:ff"
+ 12. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:11:ff"
+ 13. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:10:ff"
+ 14. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:9:ff"
+ 15. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:8:ff"
+ 16. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:7:ff"
+ 17. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:6:ff"
+ 18. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:5:ff"
+ 19. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:4:ff"
+ 20. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:3:ff"
+ 21. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:2:ff"
+ 22. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:1:ff"
+ 23. Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:0:ff"
+ 24. Port Connectivity Checks: "delay_line:delay_line_inst|carry4:\carry_delay_line:3:next_carry4:delayblock"
+ 25. Port Connectivity Checks: "delay_line:delay_line_inst|carry4:\carry_delay_line:2:next_carry4:delayblock"
+ 26. Port Connectivity Checks: "delay_line:delay_line_inst|carry4:\carry_delay_line:1:next_carry4:delayblock"
+ 27. Port Connectivity Checks: "delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock"
+ 28. Analysis & Elaboration Messages
 
 
 
@@ -37,7 +60,7 @@ https://fpgasoftware.intel.com/eula.
 +-----------------------------------------------------------------------------------------+
 ; Analysis & Elaboration Summary                                                          ;
 +------------------------------------+----------------------------------------------------+
-; Analysis & Elaboration Status      ; Failed - Wed Mar 13 12:07:26 2024                  ;
+; Analysis & Elaboration Status      ; Successful - Fri Mar 15 14:36:03 2024              ;
 ; Quartus Prime Version              ; 23.1std.0 Build 991 11/28/2023 SC Standard Edition ;
 ; Revision Name                      ; delay_line                                         ;
 ; Top-level Entity Name              ; channel                                            ;
@@ -70,6 +93,38 @@ https://fpgasoftware.intel.com/eula.
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
 +----------------------------+-------------+
+
+
++-------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |channel ;
++----------------+-------+------------------------------------------------+
+; Parameter Name ; Value ; Type                                           ;
++----------------+-------+------------------------------------------------+
+; carry4_count   ; 4     ; Signed Integer                                 ;
+; n_output_bits  ; 8     ; Signed Integer                                 ;
++----------------+-------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: delay_line:delay_line_inst ;
++----------------+-------+------------------------------------------------+
+; Parameter Name ; Value ; Type                                           ;
++----------------+-------+------------------------------------------------+
+; stages         ; 16    ; Signed Integer                                 ;
++----------------+-------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: encoder:encoder_inst ;
++----------------+-------+------------------------------------------+
+; Parameter Name ; Value ; Type                                     ;
++----------------+-------+------------------------------------------+
+; n_bits_bin     ; 8     ; Signed Integer                           ;
+; n_bits_therm   ; 16    ; Signed Integer                           ;
++----------------+-------+------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
 +------------------------------------------------------------------------------------------------------------+
@@ -158,13 +213,197 @@ https://fpgasoftware.intel.com/eula.
 +------------------------------------------------------------------+--------------------+--------------------+
 
 
++---------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:15:ff" ;
++------+-------+----------+-------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                         ;
++------+-------+----------+-------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                    ;
++------+-------+----------+-------------------------------------------------+
+
+
++---------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:14:ff" ;
++------+-------+----------+-------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                         ;
++------+-------+----------+-------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                    ;
++------+-------+----------+-------------------------------------------------+
+
+
++---------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:13:ff" ;
++------+-------+----------+-------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                         ;
++------+-------+----------+-------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                    ;
++------+-------+----------+-------------------------------------------------+
+
+
++---------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:12:ff" ;
++------+-------+----------+-------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                         ;
++------+-------+----------+-------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                    ;
++------+-------+----------+-------------------------------------------------+
+
+
++---------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:11:ff" ;
++------+-------+----------+-------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                         ;
++------+-------+----------+-------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                    ;
++------+-------+----------+-------------------------------------------------+
+
+
++---------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:10:ff" ;
++------+-------+----------+-------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                         ;
++------+-------+----------+-------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                    ;
++------+-------+----------+-------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:9:ff" ;
++------+-------+----------+------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                        ;
++------+-------+----------+------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                   ;
++------+-------+----------+------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:8:ff" ;
++------+-------+----------+------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                        ;
++------+-------+----------+------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                   ;
++------+-------+----------+------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:7:ff" ;
++------+-------+----------+------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                        ;
++------+-------+----------+------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                   ;
++------+-------+----------+------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:6:ff" ;
++------+-------+----------+------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                        ;
++------+-------+----------+------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                   ;
++------+-------+----------+------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:5:ff" ;
++------+-------+----------+------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                        ;
++------+-------+----------+------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                   ;
++------+-------+----------+------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:4:ff" ;
++------+-------+----------+------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                        ;
++------+-------+----------+------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                   ;
++------+-------+----------+------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:3:ff" ;
++------+-------+----------+------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                        ;
++------+-------+----------+------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                   ;
++------+-------+----------+------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:2:ff" ;
++------+-------+----------+------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                        ;
++------+-------+----------+------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                   ;
++------+-------+----------+------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:1:ff" ;
++------+-------+----------+------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                        ;
++------+-------+----------+------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                   ;
++------+-------+----------+------------------------------------------------+
+
+
++--------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|fdr:\latch_2:0:ff" ;
++------+-------+----------+------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                        ;
++------+-------+----------+------------------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                                   ;
++------+-------+----------+------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|carry4:\carry_delay_line:3:next_carry4:delayblock" ;
++------+-------+----------+--------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                        ;
++------+-------+----------+--------------------------------------------------------------------------------+
+; a    ; Input ; Info     ; Stuck at GND                                                                   ;
+; b    ; Input ; Info     ; Stuck at VCC                                                                   ;
++------+-------+----------+--------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|carry4:\carry_delay_line:2:next_carry4:delayblock" ;
++------+-------+----------+--------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                        ;
++------+-------+----------+--------------------------------------------------------------------------------+
+; a    ; Input ; Info     ; Stuck at GND                                                                   ;
+; b    ; Input ; Info     ; Stuck at VCC                                                                   ;
++------+-------+----------+--------------------------------------------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|carry4:\carry_delay_line:1:next_carry4:delayblock" ;
++------+-------+----------+--------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                        ;
++------+-------+----------+--------------------------------------------------------------------------------+
+; a    ; Input ; Info     ; Stuck at GND                                                                   ;
+; b    ; Input ; Info     ; Stuck at VCC                                                                   ;
++------+-------+----------+--------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock" ;
++------+-------+----------+---------------------------------------------------------------------------------+
+; Port ; Type  ; Severity ; Details                                                                         ;
++------+-------+----------+---------------------------------------------------------------------------------+
+; a    ; Input ; Info     ; Stuck at GND                                                                    ;
+; b    ; Input ; Info     ; Stuck at VCC                                                                    ;
++------+-------+----------+---------------------------------------------------------------------------------+
+
+
 +---------------------------------+
 ; Analysis & Elaboration Messages ;
 +---------------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Elaboration
     Info: Version 23.1std.0 Build 991 11/28/2023 SC Standard Edition
-    Info: Processing started: Wed Mar 13 12:07:20 2024
+    Info: Processing started: Fri Mar 15 14:35:55 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off delay_line -c delay_line --analysis_and_elaboration
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 16 of the 64 processors detected
@@ -172,13 +411,13 @@ Info (12021): Found 2 design units, including 1 entities, in source file channel
     Info (12022): Found design unit 1: channel-rtl File: /misc/home/mue/hoefer/quartus/simple_delay_line/channel.vhd Line: 18
     Info (12023): Found entity 1: channel File: /misc/home/mue/hoefer/quartus/simple_delay_line/channel.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file encoder.vhd
-    Info (12022): Found design unit 1: encoder-rtl File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 17
-    Info (12023): Found entity 1: encoder File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 4
+    Info (12022): Found design unit 1: encoder-rtl File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 18
+    Info (12023): Found entity 1: encoder File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file FDR.vhd
-    Info (12022): Found design unit 1: fdr-rtl File: /misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd Line: 12
+    Info (12022): Found design unit 1: fdr-rtl File: /misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd Line: 13
     Info (12023): Found entity 1: fdr File: /misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd Line: 4
 Info (12021): Found 2 design units, including 1 entities, in source file carry4.vhd
-    Info (12022): Found design unit 1: carry4-rtl File: /misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd Line: 14
+    Info (12022): Found design unit 1: carry4-rtl File: /misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd Line: 13
     Info (12023): Found entity 1: carry4 File: /misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd Line: 5
 Info (12021): Found 2 design units, including 1 entities, in source file full_add.vhd
     Info (12022): Found design unit 1: full_add-behavioral File: /misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd Line: 13
@@ -188,27 +427,15 @@ Info (12021): Found 2 design units, including 1 entities, in source file delay_l
     Info (12023): Found entity 1: delay_line File: /misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd Line: 5
 Info (12127): Elaborating entity "channel" for the top level hierarchy
 Info (12128): Elaborating entity "delay_line" for hierarchy "delay_line:delay_line_inst" File: /misc/home/mue/hoefer/quartus/simple_delay_line/channel.vhd Line: 48
-Info (12128): Elaborating entity "carry4" for hierarchy "delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock" File: /misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd Line: 43
-Info (12128): Elaborating entity "full_add" for hierarchy "delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock|full_add:\instan_fa:0:fa" File: /misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd Line: 31
-Info (12128): Elaborating entity "fdr" for hierarchy "delay_line:delay_line_inst|fdr:\latch:0:ff" File: /misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd Line: 68
+Info (12128): Elaborating entity "carry4" for hierarchy "delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock" File: /misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd Line: 45
+Info (12128): Elaborating entity "full_add" for hierarchy "delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock|full_add:\instan_fa:0:fa" File: /misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd Line: 30
+Info (12128): Elaborating entity "fdr" for hierarchy "delay_line:delay_line_inst|fdr:\latch_1:0:ff" File: /misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd Line: 68
+Warning (10492): VHDL Process Statement warning at FDR.vhd(18): signal "rst" is read inside the Process Statement but isn't in the Process Statement's sensitivity list File: /misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd Line: 18
 Info (12128): Elaborating entity "encoder" for hierarchy "encoder:encoder_inst" File: /misc/home/mue/hoefer/quartus/simple_delay_line/channel.vhd Line: 58
-Warning (10445): VHDL Subtype or Type Declaration warning at encoder.vhd(36): subtype or type has null range File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 36
-Warning (10445): VHDL Subtype or Type Declaration warning at encoder.vhd(23): subtype or type has null range File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 23
-Warning (10296): VHDL warning at encoder.vhd(25): ignored assignment of value to null range File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 25
-Warning (10445): VHDL Subtype or Type Declaration warning at encoder.vhd(33): subtype or type has null range File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 33
-Warning (10443): VHDL warning at encoder.vhd(33): ignored choice with illegal range bounds File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 33
-Warning (10445): VHDL Subtype or Type Declaration warning at encoder.vhd(34): subtype or type has null range File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 34
-Error (10493): VHDL Function Call or Procedure Call Statement error at encoder.vhd(22): calls to function or procedure "cls" caused stack overflow File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 22
-Error (10657): VHDL Subprogram error at encoder.vhd(34):  failed to elaborate call to subprogram "cls" File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 34
-Error (10658): VHDL Operator error at encoder.vhd(34): failed to evaluate call to operator ""&"" File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 34
-Error (10657): VHDL Subprogram error at encoder.vhd(36):  failed to elaborate call to subprogram "cls" File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 36
-Error (10658): VHDL Operator error at encoder.vhd(36): failed to evaluate call to operator ""&"" File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 36
-Error (10657): VHDL Subprogram error at encoder.vhd(54):  failed to elaborate call to subprogram "cls" File: /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd Line: 54
-Error (12152): Can't elaborate user hierarchy "encoder:encoder_inst" File: /misc/home/mue/hoefer/quartus/simple_delay_line/channel.vhd Line: 58
-Error: Quartus Prime Analysis & Elaboration was unsuccessful. 7 errors, 7 warnings
-    Error: Peak virtual memory: 723 megabytes
-    Error: Processing ended: Wed Mar 13 12:07:26 2024
-    Error: Elapsed time: 00:00:06
-    Error: Total CPU time (on all processors): 00:00:21
+Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 2 warnings
+    Info: Peak virtual memory: 709 megabytes
+    Info: Processing ended: Fri Mar 15 14:36:03 2024
+    Info: Elapsed time: 00:00:08
+    Info: Total CPU time (on all processors): 00:00:25
 
 

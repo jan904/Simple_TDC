@@ -1,13 +1,39 @@
 [N
-4
+10
+2
+7 encoder
 1
 74 /misc/home/mue/hoefer/quartus/simple_delay_line/simulation/questa/rtl_work
-2
+4
+10 n_bits_bin
+6
 10 delay_line
 3
 3 rtl
-4
+9
+12 carry4_count
+5
+12 n_bits_therm
+8
+7 channel
+10
+13 n_output_bits
+7
 6 stages
+]
+[G
+1
+8
+3
+1
+9
+1
+0
+4
+0
+0 0
+0
+0
 ]
 [G
 1
@@ -17,7 +43,49 @@
 4
 1
 0
-40
+8
+0
+0 0
+0
+0
+]
+[G
+1
+6
+3
+1
+7
+1
+0
+16
+0
+0 0
+0
+0
+]
+[G
+1
+2
+3
+1
+5
+1
+0
+16
+0
+0 0
+0
+0
+]
+[G
+1
+8
+3
+1
+10
+1
+0
+8
 0
 0 0
 0
