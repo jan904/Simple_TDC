@@ -1,7 +1,9 @@
 |channel
 clk => delay_line:delay_line_inst.clock
+clk => detect_signal:detect_signal_inst.clock
 clk => encoder:encoder_inst.clk
 signal_in => delay_line:delay_line_inst.trigger
+signal_in => detect_signal:detect_signal_inst.signal_in
 signal_out[0] << encoder:encoder_inst.count_o[0]
 signal_out[1] << encoder:encoder_inst.count_o[1]
 signal_out[2] << encoder:encoder_inst.count_o[2]
@@ -13,9 +15,40 @@ signal_out[7] << encoder:encoder_inst.count_o[7]
 
 
 |channel|delay_line:delay_line_inst
+reset => fdr:latch_1:0:ff.rst
+reset => fdr:latch_1:1:ff.rst
+reset => fdr:latch_1:2:ff.rst
+reset => fdr:latch_1:3:ff.rst
+reset => fdr:latch_1:4:ff.rst
+reset => fdr:latch_1:5:ff.rst
+reset => fdr:latch_1:6:ff.rst
+reset => fdr:latch_1:7:ff.rst
+reset => fdr:latch_1:8:ff.rst
+reset => fdr:latch_1:9:ff.rst
+reset => fdr:latch_1:10:ff.rst
+reset => fdr:latch_1:11:ff.rst
+reset => fdr:latch_1:12:ff.rst
+reset => fdr:latch_1:13:ff.rst
+reset => fdr:latch_1:14:ff.rst
+reset => fdr:latch_1:15:ff.rst
+reset => fdr:latch_2:0:ff.rst
+reset => fdr:latch_2:1:ff.rst
+reset => fdr:latch_2:2:ff.rst
+reset => fdr:latch_2:3:ff.rst
+reset => fdr:latch_2:4:ff.rst
+reset => fdr:latch_2:5:ff.rst
+reset => fdr:latch_2:6:ff.rst
+reset => fdr:latch_2:7:ff.rst
+reset => fdr:latch_2:8:ff.rst
+reset => fdr:latch_2:9:ff.rst
+reset => fdr:latch_2:10:ff.rst
+reset => fdr:latch_2:11:ff.rst
+reset => fdr:latch_2:12:ff.rst
+reset => fdr:latch_2:13:ff.rst
+reset => fdr:latch_2:14:ff.rst
+reset => fdr:latch_2:15:ff.rst
 trigger => carry4:carry_delay_line:0:first_carry4:delayblock.Cin
 clock => fdr:latch_1:0:ff.clk
-clock => rst.CLK
 clock => fdr:latch_1:1:ff.clk
 clock => fdr:latch_1:2:ff.clk
 clock => fdr:latch_1:3:ff.clk
@@ -47,22 +80,70 @@ clock => fdr:latch_2:12:ff.clk
 clock => fdr:latch_2:13:ff.clk
 clock => fdr:latch_2:14:ff.clk
 clock => fdr:latch_2:15:ff.clk
-output[0] <= fdr:latch_2:0:ff.q
-output[1] <= fdr:latch_2:1:ff.q
-output[2] <= fdr:latch_2:2:ff.q
-output[3] <= fdr:latch_2:3:ff.q
-output[4] <= fdr:latch_2:4:ff.q
-output[5] <= fdr:latch_2:5:ff.q
-output[6] <= fdr:latch_2:6:ff.q
-output[7] <= fdr:latch_2:7:ff.q
-output[8] <= fdr:latch_2:8:ff.q
-output[9] <= fdr:latch_2:9:ff.q
-output[10] <= fdr:latch_2:10:ff.q
-output[11] <= fdr:latch_2:11:ff.q
-output[12] <= fdr:latch_2:12:ff.q
-output[13] <= fdr:latch_2:13:ff.q
-output[14] <= fdr:latch_2:14:ff.q
-output[15] <= fdr:latch_2:15:ff.q
+signal_running => fdr:latch_1:0:ff.lock
+signal_running => fdr:latch_1:1:ff.lock
+signal_running => fdr:latch_1:2:ff.lock
+signal_running => fdr:latch_1:3:ff.lock
+signal_running => fdr:latch_1:4:ff.lock
+signal_running => fdr:latch_1:5:ff.lock
+signal_running => fdr:latch_1:6:ff.lock
+signal_running => fdr:latch_1:7:ff.lock
+signal_running => fdr:latch_1:8:ff.lock
+signal_running => fdr:latch_1:9:ff.lock
+signal_running => fdr:latch_1:10:ff.lock
+signal_running => fdr:latch_1:11:ff.lock
+signal_running => fdr:latch_1:12:ff.lock
+signal_running => fdr:latch_1:13:ff.lock
+signal_running => fdr:latch_1:14:ff.lock
+signal_running => fdr:latch_1:15:ff.lock
+signal_running => fdr:latch_2:0:ff.lock
+signal_running => fdr:latch_2:1:ff.lock
+signal_running => fdr:latch_2:2:ff.lock
+signal_running => fdr:latch_2:3:ff.lock
+signal_running => fdr:latch_2:4:ff.lock
+signal_running => fdr:latch_2:5:ff.lock
+signal_running => fdr:latch_2:6:ff.lock
+signal_running => fdr:latch_2:7:ff.lock
+signal_running => fdr:latch_2:8:ff.lock
+signal_running => fdr:latch_2:9:ff.lock
+signal_running => fdr:latch_2:10:ff.lock
+signal_running => fdr:latch_2:11:ff.lock
+signal_running => fdr:latch_2:12:ff.lock
+signal_running => fdr:latch_2:13:ff.lock
+signal_running => fdr:latch_2:14:ff.lock
+signal_running => fdr:latch_2:15:ff.lock
+intermediate_signal[0] <= fdr:latch_1:0:ff.q
+intermediate_signal[1] <= fdr:latch_1:1:ff.q
+intermediate_signal[2] <= fdr:latch_1:2:ff.q
+intermediate_signal[3] <= fdr:latch_1:3:ff.q
+intermediate_signal[4] <= fdr:latch_1:4:ff.q
+intermediate_signal[5] <= fdr:latch_1:5:ff.q
+intermediate_signal[6] <= fdr:latch_1:6:ff.q
+intermediate_signal[7] <= fdr:latch_1:7:ff.q
+intermediate_signal[8] <= fdr:latch_1:8:ff.q
+intermediate_signal[9] <= fdr:latch_1:9:ff.q
+intermediate_signal[10] <= fdr:latch_1:10:ff.q
+intermediate_signal[11] <= fdr:latch_1:11:ff.q
+intermediate_signal[12] <= fdr:latch_1:12:ff.q
+intermediate_signal[13] <= fdr:latch_1:13:ff.q
+intermediate_signal[14] <= fdr:latch_1:14:ff.q
+intermediate_signal[15] <= fdr:latch_1:15:ff.q
+therm_code[0] <= fdr:latch_2:0:ff.q
+therm_code[1] <= fdr:latch_2:1:ff.q
+therm_code[2] <= fdr:latch_2:2:ff.q
+therm_code[3] <= fdr:latch_2:3:ff.q
+therm_code[4] <= fdr:latch_2:4:ff.q
+therm_code[5] <= fdr:latch_2:5:ff.q
+therm_code[6] <= fdr:latch_2:6:ff.q
+therm_code[7] <= fdr:latch_2:7:ff.q
+therm_code[8] <= fdr:latch_2:8:ff.q
+therm_code[9] <= fdr:latch_2:9:ff.q
+therm_code[10] <= fdr:latch_2:10:ff.q
+therm_code[11] <= fdr:latch_2:11:ff.q
+therm_code[12] <= fdr:latch_2:12:ff.q
+therm_code[13] <= fdr:latch_2:13:ff.q
+therm_code[14] <= fdr:latch_2:14:ff.q
+therm_code[15] <= fdr:latch_2:15:ff.q
 
 
 |channel|delay_line:delay_line_inst|carry4:\carry_delay_line:0:first_carry4:delayblock
@@ -275,6 +356,7 @@ Cout <= Cout.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:0:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -282,6 +364,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:1:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -289,6 +372,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:2:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -296,6 +380,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:3:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -303,6 +388,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:4:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -310,6 +396,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:5:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -317,6 +404,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:6:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -324,6 +412,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:7:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -331,6 +420,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:8:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -338,6 +428,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:9:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -345,6 +436,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:10:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -352,6 +444,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:11:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -359,6 +452,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:12:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -366,6 +460,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:13:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -373,6 +468,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:14:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -380,6 +476,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_1:15:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -387,6 +484,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:0:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -394,6 +492,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:1:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -401,6 +500,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:2:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -408,6 +508,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:3:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -415,6 +516,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:4:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -422,6 +524,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:5:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -429,6 +532,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:6:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -436,6 +540,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:7:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -443,6 +548,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:8:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -450,6 +556,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:9:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -457,6 +564,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:10:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -464,6 +572,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:11:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -471,6 +580,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:12:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -478,6 +588,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:13:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -485,6 +596,7 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:14:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
@@ -492,9 +604,42 @@ q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 |channel|delay_line:delay_line_inst|fdr:\latch_2:15:ff
 rst => q~reg0.ACLR
+lock => q~reg0.ENA
 clk => q~reg0.CLK
 t => q~reg0.DATAIN
 q <= q~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|channel|detect_signal:detect_signal_inst
+clock => reset~reg0.CLK
+clock => signal_running~reg0.CLK
+signal_in => process_0.IN1
+interm_latch[0] => signal_running~reg0.DATAIN
+interm_latch[1] => ~NO_FANOUT~
+interm_latch[2] => ~NO_FANOUT~
+interm_latch[3] => ~NO_FANOUT~
+interm_latch[4] => ~NO_FANOUT~
+interm_latch[5] => ~NO_FANOUT~
+interm_latch[6] => ~NO_FANOUT~
+interm_latch[7] => ~NO_FANOUT~
+interm_latch[8] => ~NO_FANOUT~
+interm_latch[9] => ~NO_FANOUT~
+interm_latch[10] => ~NO_FANOUT~
+interm_latch[11] => ~NO_FANOUT~
+interm_latch[12] => ~NO_FANOUT~
+interm_latch[13] => ~NO_FANOUT~
+interm_latch[14] => ~NO_FANOUT~
+interm_latch[15] => ~NO_FANOUT~
+signal_out[0] => LessThan0.IN16
+signal_out[1] => LessThan0.IN15
+signal_out[2] => LessThan0.IN14
+signal_out[3] => LessThan0.IN13
+signal_out[4] => LessThan0.IN12
+signal_out[5] => LessThan0.IN11
+signal_out[6] => LessThan0.IN10
+signal_out[7] => LessThan0.IN9
+signal_running <= signal_running~reg0.DB_MAX_OUTPUT_PORT_TYPE
+reset <= reset~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |channel|encoder:encoder_inst

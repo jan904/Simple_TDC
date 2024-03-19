@@ -1,10 +1,8 @@
 m255
 K4
 z2
-!s12c _opt1
-Z0 !s99 nomlopt
 !s12c _opt
-R0
+Z0 !s99 nomlopt
 !s11e vcom 2023.3 2023.07, Jul 17 2023
 13
 !s112 1.1
@@ -13,25 +11,24 @@ R0
 !i10f 100
 cModel Technology
 Z1 d/misc/home/mue/hoefer/quartus/simple_delay_line/simulation/questa
-T_opt1
-!s110 1710509321
-VQ3n>VH=[6Uz1iGeX_eB?@0
+T_opt
+!s110 1710847492
+V2U>QQRW30c5oF_2D`bQ^T2
 04 7 3 work channel rtl 1
-=1-ac1f6b63df43-65f44d09-5e11f-45e1
+=1-ac1f6b63df43-65f97604-2b162-ad2d
 R0
 !s12b OEM100
-!s124 OEM10U55 
+!s124 OEM10U56 
 o-quiet -auto_acc_if_foreign -work work
 tCvgOpt 0
-n@_opt1
+n@_opt
 OL;O;2023.3;77
-R1
 Ecarry4
 Z2 w1710408938
 Z3 DPx4 ieee 15 std_logic_arith 0 22 B[jVX6I8iRX2o6WYW0BB>3
 Z4 DPx3 std 6 textio 0 22 LS[?81n5ZHWBI9JkBZTV<2
 Z5 DPx4 ieee 14 std_logic_1164 0 22 6<US`=mgl_dFdCEFF7J=m1
-!i122 3
+!i122 4
 R1
 Z6 8/misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd
 Z7 F/misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd
@@ -41,9 +38,9 @@ VHZ7L7OaJ?E=PLzdH4GjH`3
 !s100 E46i[8?faSV<kaGgBibm22
 Z8 OL;C;2023.3;77
 31
-Z9 !s110 1710509778
+Z9 !s110 1710847485
 !i10b 1
-Z10 !s108 1710509778.000000
+Z10 !s108 1710847485.000000
 Z11 !s90 -reportprogress|300|-93|-work|work|/misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd|
 Z12 !s107 /misc/home/mue/hoefer/quartus/simple_delay_line/carry4.vhd|
 !i113 0
@@ -54,7 +51,7 @@ R3
 R4
 R5
 DEx4 work 6 carry4 0 22 HZ7L7OaJ?E=PLzdH4GjH`3
-!i122 3
+!i122 4
 l26
 L13 31
 VQVf>WlNz<M]ITH?2o@UP_3
@@ -70,11 +67,11 @@ R12
 R13
 R14
 Echannel
-Z15 w1710506566
+Z15 w1710847284
 R3
 R4
 R5
-!i122 0
+!i122 1
 R1
 Z16 8/misc/home/mue/hoefer/quartus/simple_delay_line/channel.vhd
 Z17 F/misc/home/mue/hoefer/quartus/simple_delay_line/channel.vhd
@@ -97,11 +94,11 @@ R3
 R4
 R5
 DEx4 work 7 channel 0 22 5z;L8]]Y2aAfaLl[4QXZ31
-!i122 0
-l46
-L18 52
-VUeA<gm]meKg_fc4T]0@Ab2
-!s100 Rznd9O`TYOgh_c7QzgGCP1
+!i122 1
+l67
+L18 92
+Ve^:j3CoNGgY:R<B`K4K7;1
+!s100 Gl3m[MH2_fIL]FFOgUoYO1
 R8
 31
 R9
@@ -113,25 +110,25 @@ R19
 R13
 R14
 Edelay_line
-Z20 w1710509284
+Z20 w1710846400
 Z21 DPx4 ieee 11 numeric_std 0 22 F8@]:i<mFK7<TjIzKcTGi0
 R4
 R5
-!i122 5
+!i122 6
 R1
 Z22 8/misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd
 Z23 F/misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd
 l0
 L5 1
-VXJG=UT:<<f3^HN=>?d3LV1
-!s100 ``3C31YTi_M?TNCeK;8I[1
+VYQ>U><=jgNL6<4RzV0a;T0
+!s100 9cMY<k0Y2L`=<n666jTjz1
 R8
 31
-Z24 !s110 1710509779
+Z24 !s110 1710847486
 !i10b 1
-Z25 !s108 1710509779.000000
+Z25 !s108 1710847486.000000
 Z26 !s90 -reportprogress|300|-93|-work|work|/misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd|
-!s107 /misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd|
+Z27 !s107 /misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd|
 !i113 0
 R13
 R14
@@ -139,42 +136,42 @@ Artl
 R21
 R4
 R5
-DEx4 work 10 delay_line 0 22 XJG=UT:<<f3^HN=>?d3LV1
-!i122 5
-l41
-L17 83
-V::nYZQ^3K?519YWJJ<???3
-!s100 JT;_;66lGnaK3lG=n99`?0
+DEx4 work 10 delay_line 0 22 YQ>U><=jgNL6<4RzV0a;T0
+!i122 6
+l44
+L20 76
+V1TgYA586K>5<BA0gRIU:;3
+!s100 V[_@QcJmi3_`M]bCm35AI3
 R8
 31
 R24
 !i10b 1
 R25
 R26
-Z27 !s107 /misc/home/mue/hoefer/quartus/simple_delay_line/delay_line.vhd|
+R27
 !i113 0
 R13
 R14
-Eencoder
-Z28 w1710507626
+Edetect_signal
+Z28 w1710847458
 R21
 R4
 R5
-!i122 1
+!i122 0
 R1
-Z29 8/misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd
-Z30 F/misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd
+Z29 8/misc/home/mue/hoefer/quartus/simple_delay_line/detect_signal.vhd
+Z30 F/misc/home/mue/hoefer/quartus/simple_delay_line/detect_signal.vhd
 l0
 L5 1
-VY1dYYakW>zWzT`^emMaC52
-!s100 0OOAkdodSB9LOJ^:DRg<81
+VbV`_ECSaAEOfNnM7hW_2J3
+!s100 _e7N5oji`idT:TCUZYd6A3
 R8
 31
 R9
 !i10b 1
 R10
-Z31 !s90 -reportprogress|300|-93|-work|work|/misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd|
-Z32 !s107 /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd|
+Z31 !s90 -reportprogress|300|-93|-work|work|/misc/home/mue/hoefer/quartus/simple_delay_line/detect_signal.vhd|
+Z32 !s107 /misc/home/mue/hoefer/quartus/simple_delay_line/detect_signal.vhd|
 !i113 0
 R13
 R14
@@ -182,12 +179,12 @@ Artl
 R21
 R4
 R5
-DEx4 work 7 encoder 0 22 Y1dYYakW>zWzT`^emMaC52
-!i122 1
-l20
-L18 20
-VDhg=L:LEbGR;<E0iTli=h3
-!s100 8X^_Z4DG24nVX<VFjP=1K1
+DEx4 work 13 detect_signal 0 22 bV`_ECSaAEOfNnM7hW_2J3
+!i122 0
+l21
+L20 22
+VBK<7`D=bJ;D2QDRdPS?QU2
+!s100 b@mZdO7Vn[h=6^D4OSLgP3
 R8
 31
 R9
@@ -198,37 +195,39 @@ R32
 !i113 0
 R13
 R14
-Efdr
-Z33 w1710508993
+Eencoder
+Z33 w1710846990
+R21
 R4
 R5
 !i122 2
 R1
-Z34 8/misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd
-Z35 F/misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd
+Z34 8/misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd
+Z35 F/misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd
 l0
-L4 1
-VgeJ=zlg:c_?g[ia82BiQJ0
-!s100 dPYo974UU_lC55e[:gnSH2
+L5 1
+VY1dYYakW>zWzT`^emMaC52
+!s100 0OOAkdodSB9LOJ^:DRg<81
 R8
 31
 R9
 !i10b 1
 R10
-Z36 !s90 -reportprogress|300|-93|-work|work|/misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd|
-Z37 !s107 /misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd|
+Z36 !s90 -reportprogress|300|-93|-work|work|/misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd|
+Z37 !s107 /misc/home/mue/hoefer/quartus/simple_delay_line/encoder.vhd|
 !i113 0
 R13
 R14
 Artl
+R21
 R4
 R5
-DEx4 work 3 fdr 0 22 geJ=zlg:c_?g[ia82BiQJ0
+DEx4 work 7 encoder 0 22 Y1dYYakW>zWzT`^emMaC52
 !i122 2
-l15
-L13 12
-VN:NNkC`?8=V:UF:blNG1M2
-!s100 Z;i_=WWzT95bQm9a_8^m12
+l20
+L18 20
+VWMjLUT0=ihlo`C7VWSl^91
+!s100 ;^j<d5dT3AT6oLHbk1kT91
 R8
 31
 R9
@@ -239,14 +238,55 @@ R37
 !i113 0
 R13
 R14
-Efull_add
-Z38 w1710507446
+Efdr
+Z38 w1710845749
 R4
 R5
-!i122 4
+!i122 3
 R1
-Z39 8/misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd
-Z40 F/misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd
+Z39 8/misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd
+Z40 F/misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd
+l0
+L4 1
+VBg8C3Hb_B=<O4dQFl4fc53
+!s100 Kb8[NjeOdfd`^h4::jhdY0
+R8
+31
+R9
+!i10b 1
+R10
+Z41 !s90 -reportprogress|300|-93|-work|work|/misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd|
+Z42 !s107 /misc/home/mue/hoefer/quartus/simple_delay_line/FDR.vhd|
+!i113 0
+R13
+R14
+Artl
+R4
+R5
+DEx4 work 3 fdr 0 22 Bg8C3Hb_B=<O4dQFl4fc53
+!i122 3
+l16
+L14 14
+V=7Ei_HDD49`JR1=USV^nD1
+!s100 NHGUzz[i40=dX2?BbOk4D1
+R8
+31
+R9
+!i10b 1
+R10
+R41
+R42
+!i113 0
+R13
+R14
+Efull_add
+Z43 w1710507446
+R4
+R5
+!i122 5
+R1
+Z44 8/misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd
+Z45 F/misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd
 l0
 L4 1
 VoH_zKQ<bO@nAmjM[1[BFz1
@@ -256,8 +296,8 @@ R8
 R24
 !i10b 1
 R10
-Z41 !s90 -reportprogress|300|-93|-work|work|/misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd|
-Z42 !s107 /misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd|
+Z46 !s90 -reportprogress|300|-93|-work|work|/misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd|
+Z47 !s107 /misc/home/mue/hoefer/quartus/simple_delay_line/full_add.vhd|
 !i113 0
 R13
 R14
@@ -265,7 +305,7 @@ Abehavioral
 R4
 R5
 DEx4 work 8 full_add 0 22 oH_zKQ<bO@nAmjM[1[BFz1
-!i122 4
+!i122 5
 l15
 L13 5
 VdcK3?M7Qc3KjKZ50J3H5F2
@@ -275,8 +315,8 @@ R8
 R24
 !i10b 1
 R10
-R41
-R42
+R46
+R47
 !i113 0
 R13
 R14

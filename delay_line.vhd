@@ -4,22 +4,24 @@ use ieee.numeric_std.all;
 
 entity delay_line is
     generic (
-        stages : integer := 40
+        stages : integer 
     );
     port (
+        reset : in std_logic;
         trigger : in std_logic;
         clock : in std_logic;
-        output : out std_logic_vector(stages-1 downto 0)
+        signal_running : in std_logic;
+        intermediate_signal : out std_logic_vector(stages-1 downto 0);
+        therm_code : out std_logic_vector(stages-1 downto 0)
     );
 end delay_line;
 
 
 architecture rtl of delay_line is
 
-    signal unreg : std_logic_vector(stages-1 downto 0);
-    signal interm : std_logic_vector(stages-1 downto 0);
-    signal Cin : std_logic := '0';
-    signal rst : std_logic;
+    signal unlatched_signal : std_logic_vector(stages-1 downto 0);
+    signal latched_once : std_logic_vector(stages-1 downto 0);
+--  signal Cin : std_logic := '0';
 
     component carry4
         port (
@@ -33,6 +35,7 @@ architecture rtl of delay_line is
         port (
             rst: in std_logic;
             clk: in std_logic;
+            lock : in std_logic;
             t: in std_logic;
             q: out std_logic
         );
@@ -47,7 +50,7 @@ begin
                     a => "0000",
                     b => "1111",
                     Cin => trigger,
-                    Cout_vector => unreg(3 downto 0)
+                    Cout_vector => unlatched_signal(3 downto 0)
                 );
         end generate first_carry4;
 
@@ -57,8 +60,8 @@ begin
                 port map (
                     a => "0000",
                     b => "1111",
-                    Cin => unreg((4*i)-1),
-                    Cout_vector => unreg((4*(i+1))-1 downto (4*i))
+                    Cin => unlatched_signal((4*i)-1),
+                    Cout_vector => unlatched_signal((4*(i+1))-1 downto (4*i))
                 );
         end generate next_carry4;
     end generate;
@@ -67,32 +70,25 @@ begin
     begin
         ff: fdr
             port map (
-                rst => rst,
+                rst => reset,
+                lock => signal_running,
                 clk => clock,
-                t => unreg(i),
-                q => interm(i)
+                t => unlatched_signal(i),
+                q => latched_once(i)
             );
     end generate latch_1;
 
-    process(clock)
-    begin
-        if rising_edge(clock) then
-            if ((interm(0) = '1') and (trigger = '0')) then
-                rst <= '1';
-            elsif interm(0) = '0' then
-                rst <= '0';
-            end if;
-        end if;
-    end process;
+    intermediate_signal <= latched_once;
 
     latch_2: for i in 0 to stages-1 generate
     begin
         ff: fdr
             port map (
-                rst => '0',
+                rst => reset,
+                lock => signal_running,
                 clk => clock,
-                t => interm(i),
-                q => output(i)
+                t => latched_once(i),
+                q => therm_code(i)
             );
     end generate latch_2;
     

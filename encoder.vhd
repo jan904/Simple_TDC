@@ -20,7 +20,6 @@ architecture rtl of encoder is
 begin
 
     process(clk)	
-        variable zeros : unsigned(n_bits_bin-2 downto 0) := (others => '0');
         variable count : unsigned(n_bits_bin-1 downto 0) := (others => '0');
     begin
         if rising_edge(clk) then
@@ -31,6 +30,7 @@ begin
                 end if;
             end loop;
             count_o <= std_logic_vector(count);
+
         end if;
     end process;
 
