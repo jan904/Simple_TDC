@@ -1,109 +1,130 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.std_logic_arith.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.std_logic_arith.ALL;
 
-entity channel is
-    generic (
-        carry4_count : integer := 4;
-        n_output_bits : integer := 8
+ENTITY channel IS
+    GENERIC (
+        carry4_count : INTEGER := 32;
+        n_output_bits : INTEGER := 8
     );
-    port (
-        clk : in std_logic;
-        signal_in : in std_logic;
-        signal_out : out std_logic_vector(n_output_bits-1 downto 0)
+    PORT (
+        clk : IN STD_LOGIC;
+        signal_in : IN STD_LOGIC;
+        signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+        serial_out : OUT STD_LOGIC
     );
-end entity channel;
+END ENTITY channel;
+ARCHITECTURE rtl OF channel IS
 
+    SIGNAL reset_uart : STD_LOGIC;
+    SIGNAL a_reset : STD_LOGIC;
+    SIGNAL busy : STD_LOGIC;
+    SIGNAL wr_en : STD_LOGIC;
+    SIGNAL n_ones : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
+    SIGNAL detect_edge : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
+    SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+    SIGNAL tap_clk : STD_LOGIC;
 
-architecture rtl of channel is
-
-    signal a_reset : std_logic;
-    signal busy : std_logic;
-    signal n_ones: std_logic_vector(carry4_count*4-1 downto 0);
-    signal detect_edge : std_logic_vector(carry4_count*4-1 downto 0);
-    signal bin_output : std_logic_vector(n_output_bits-1 downto 0);
-
-    component delay_line is
-        generic (
-            stages : positive
+    COMPONENT delay_line IS
+        GENERIC (
+            stages : POSITIVE
         );
-        port (
-            reset : in std_logic;
-            trigger : in std_logic;
-            clock : in std_logic;
-            signal_running : in std_logic;
-            intermediate_signal : out std_logic_vector(stages-1 downto 0);
-            therm_code : out std_logic_vector(stages-1 downto 0)
+        PORT (
+            reset : IN STD_LOGIC;
+            trigger : IN STD_LOGIC;
+            clock : IN STD_LOGIC;
+            signal_running : IN STD_LOGIC;
+            intermediate_signal : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
+            therm_code : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0)
         );
-    end component delay_line;
+    END COMPONENT delay_line;
 
-    component encoder is
-        generic (
-            n_bits_bin : positive;
-            n_bits_therm : positive
+    COMPONENT encoder IS
+        GENERIC (
+            n_bits_bin : POSITIVE;
+            n_bits_therm : POSITIVE
         );
-        port (
-            clk : in std_logic;
-            thermometer : in std_logic_vector((n_bits_therm-1) downto 0);
-            count_o : out std_logic_vector(n_bits_bin-1 downto 0) 
+        PORT (
+            clk : IN STD_LOGIC;
+            thermometer : IN STD_LOGIC_VECTOR((n_bits_therm - 1) DOWNTO 0);
+            count_o : OUT STD_LOGIC_VECTOR(n_bits_bin - 1 DOWNTO 0)
         );
-    end component encoder;
+    END COMPONENT encoder;
 
-    component detect_signal is
-        generic (
-            stages : positive;
-            n_output_bits : positive
+    COMPONENT detect_signal IS
+        GENERIC (
+            stages : POSITIVE;
+            n_output_bits : POSITIVE
         );
-        port (
-            clock : in std_logic;
-            signal_in : in std_logic;
-            interm_latch : in std_logic_vector(stages-1 downto 0);
-            signal_out : in std_logic_vector(n_output_bits-1 downto 0);
-            signal_running : out std_logic;
-            reset : out std_logic
+        PORT (
+            clock : IN STD_LOGIC;
+            signal_in : IN STD_LOGIC;
+            interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
+            signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+            signal_running : OUT STD_LOGIC;
+            reset : OUT STD_LOGIC;
+            wrt : OUT STD_LOGIC
         );
-    end component detect_signal;
+    END COMPONENT detect_signal;
 
-begin
+    COMPONENT uart IS
+        PORT (
+            clk : IN STD_LOGIC;
+            rst : IN STD_LOGIC;
+            we : IN STD_LOGIC;
+            din : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+            tx : OUT STD_LOGIC
+        );
+    END COMPONENT uart;
+
+BEGIN
+    tap_clk <= clk;
 
     delay_line_inst : delay_line
-        generic map (
-            stages => carry4_count*4
-        )
-        port map (
-            reset => a_reset,
-            signal_running => busy,
-            trigger => signal_in,
-            clock => clk,
-            intermediate_signal => detect_edge,
-            therm_code => n_ones
-        );
-
-
+    GENERIC MAP(
+        stages => carry4_count * 4
+    )
+    PORT MAP(
+        reset => a_reset,
+        signal_running => busy,
+        trigger => signal_in,
+        clock => clk,
+        intermediate_signal => detect_edge,
+        therm_code => n_ones
+    );
     detect_signal_inst : detect_signal
-        generic map (
-            stages => carry4_count*4,
-            n_output_bits => n_output_bits
-        )
-        port map (
-            clock => clk,
-            signal_in => signal_in,
-            interm_latch => detect_edge,
-            signal_out => bin_output,
-            signal_running => busy,
-            reset => a_reset
-        );
-
+    GENERIC MAP(
+        stages => carry4_count * 4,
+        n_output_bits => n_output_bits
+    )
+    PORT MAP(
+        clock => clk,
+        signal_in => signal_in,
+        interm_latch => detect_edge,
+        signal_out => bin_output,
+        signal_running => busy,
+        reset => a_reset,
+        wrt => wr_en
+    );
     encoder_inst : encoder
-        generic map (
-            n_bits_bin => n_output_bits,
-            n_bits_therm => 4*carry4_count 
-        )
-        port map (
-            clk => clk,
-            thermometer => n_ones,
-            count_o => bin_output
-        );
-        signal_out <= bin_output;
-end architecture rtl;
+    GENERIC MAP(
+        n_bits_bin => n_output_bits,
+        n_bits_therm => 4 * carry4_count
+    )
+    PORT MAP(
+        clk => clk,
+        thermometer => n_ones,
+        count_o => bin_output
+    );
+    signal_out <= bin_output;
 
+    uart_inst : uart
+    PORT MAP(
+        clk => clk,
+        rst => reset_uart,
+        we => wr_en,
+        din => bin_output,
+        tx => serial_out
+    );
+        
+END ARCHITECTURE rtl;

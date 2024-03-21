@@ -17,7 +17,7 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY fdr ISs
+ENTITY fdr IS
     PORT (
         rst : IN STD_LOGIC;
         lock : IN STD_LOGIC;

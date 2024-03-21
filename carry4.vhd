@@ -36,16 +36,21 @@ ARCHITECTURE rtl OF carry4 IS
         );
     END COMPONENT full_add;
 
+	ATTRIBUTE keep : boolean;
+    ATTRIBUTE keep OF carry : SIGNAL IS TRUE;
+    ATTRIBUTE keep OF a : SIGNAL IS TRUE;
+    ATTRIBUTE keep OF b : SIGNAL IS TRUE;
+
 BEGIN
     carry(0) <= Cin;
     instan_fa : FOR ii IN 0 TO 3 GENERATE
-        --fa : full_add port map (
-        --    a => a(ii), 
-        --    b => b(ii),
-        --    Cin => carry(ii),
-        --    Cout => carry(ii+1)
-        --);
-        carry(ii + 1) <= (a(ii) AND b(ii)) OR (carry(ii) AND (a(ii) XOR b(ii)));
+        fa : full_add port map (
+        a => a(ii), 
+            b => b(ii),
+            Cin => carry(ii),
+            Cout => carry(ii+1)
+        );
+        --carry(ii + 1) <= (a(ii) AND b(ii)) OR (carry(ii) AND (a(ii) XOR b(ii)));
     END GENERATE instan_fa;
 
     Cout_vector(0) <= carry(1);

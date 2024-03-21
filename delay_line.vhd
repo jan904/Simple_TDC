@@ -62,8 +62,12 @@ ARCHITECTURE rtl OF delay_line IS
             q : OUT STD_LOGIC
         );
     END COMPONENT;
-
+	
+	ATTRIBUTE keep : boolean;
+    ATTRIBUTE keep OF unlatched_signal : SIGNAL IS TRUE;
+	
 BEGIN
+
     carry_delay_line : FOR i IN 0 TO stages/4 - 1 GENERATE
         first_carry4 : IF i = 0 GENERATE
         BEGIN
@@ -71,7 +75,7 @@ BEGIN
             PORT MAP(
                 a => "0000",
                 b => "1111",
-                Cin => trigger,
+                Cin => not trigger,
                 Cout_vector => unlatched_signal(3 DOWNTO 0)
             );
         END GENERATE first_carry4;

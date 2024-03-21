@@ -25,5 +25,7 @@ END ENTITY full_add;
 ARCHITECTURE behavioral OF full_add IS
 
 BEGIN
+  --sum <= Cin XOR ( a XOR b );
   Cout <= (a AND b) OR (Cin AND (a XOR b));
+  
 END ARCHITECTURE behavioral;
