@@ -1,3 +1,16 @@
+-- Carry4 module consisting of 4 full adders
+--
+-- The carry-in of the first full adder is connected to the Cin input of the module.
+-- Each carry-out of the full adders is connected to the carry-in of the next full adder.
+-- The carry-outs are stored asynchonously in the Cout_vector output of the module.
+--
+-- Inputs: 
+--  a, b: 4-bit vectors
+--  Cin: carry-in
+--
+-- Outputs:
+--  Cout_vector: 4-bit vector containing the carry-outs of the full adders
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
