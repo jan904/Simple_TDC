@@ -1,3 +1,26 @@
+-- Tapped delay line 
+--
+-- This module implements a tapped delay line with a configurable number of stages.
+-- The delay line is implemented using a chain of carry4 cells. The 4-bit inputs to 
+-- the carry4 cells are '0000' and '1111', such that the carry-in propagates through
+-- the chain of cells. The carry-in of the first cell is driven by the trigger signal. If a '1' comes in
+-- as a trigger, this one propagates through the chain of cells.
+-- Each cell has 4 carry-out signals, one for each full adder.
+-- One the rising edge of the clock signal, the carry-out signals are latched using a FDR FlipFlop. 
+-- The number of ones in the latched signal indicates the number of stages that the input signal has been 
+-- propagated through and thus gives timing information. The output of the latches should be perfect thermometer code.
+-- The signal is then latched twice for stability reasons.
+--
+-- Inputs:
+--  reset: Asynchronous reset signal. Set to '1' when the TDC is ready for a new signal 
+--  trigger: Signal that triggers the delay line
+--  clock: Clock signal
+--  signal_running: Signal that indicates that the delay chain is busy with a signal
+--
+-- Outputs:
+--  intermediate_signal: signal after the first row of latches
+--  therm_code: signal after the second row of latches
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
