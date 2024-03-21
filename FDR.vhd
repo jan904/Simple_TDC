@@ -1,3 +1,18 @@
+-- Flip Flop with Reset and Lock
+--
+-- This is a simple flip flop with reset and lock. The output is updated on the
+-- rising edge of the clock signal, unless the lock signal is set to 1. In that
+-- case, the output is not updated.
+--
+-- Inputs:
+--   rst: reset output to 0
+--   lock: if set to 1, output is not updated
+--   clk: clock
+--   t: input signal
+--
+-- Outputs:
+--   q: output signal
+
 library ieee;
 use ieee.std_logic_1164.all;
 
