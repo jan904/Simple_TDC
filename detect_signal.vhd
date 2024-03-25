@@ -18,47 +18,64 @@ ENTITY detect_signal IS
     );
 END ENTITY detect_signal;
 
-ARCHITECTURE rtl OF detect_signal IS
 
-    SIGNAL check_write : STD_LOGIC;
-    SIGNAL check_reset : STD_LOGIC;
-    SIGNAL check_running : STD_LOGIC;
-    SIGNAL count : INTEGER := 0;
+ARCHITECTURE fsm OF detect_signal IS
+
+    TYPE stype IS (IDLE, DETECT_START, WRITE, RST);
+    SIGNAL state, next_state : stype;
+    SIGNAL reset_reg : STD_LOGIC;
+    SIGNAL signal_running_reg : STD_LOGIC;
+    SIGNAL wrt_reg : STD_LOGIC;
 
 BEGIN
-
-    wrt <= check_write;
-    reset <= check_reset;
-    signal_running <= check_running;
-
-    PROCESS (clock)
+    PROCESS(clock)
     BEGIN
         IF rising_edge(clock) THEN
-            IF ((interm_latch(0) = '1')) THEN
-                check_running <= '1';
-            ELSE
-                check_running <= '0';
-            END IF;
-
-            IF ((unsigned(signal_out) > 0) AND (signal_in = '1')) THEN
-                check_reset <= '1';
-            ELSE
-                check_reset <= '0';
-            END IF;
-
-            IF check_running = '1' THEN
-                IF count = 1 THEN
-                    check_write <= '1';
-                    count <= 0;
-                ELSE
-                    check_write <= '0';
-                    count <= count + 1;
-                END IF;
-            ELSIF check_write = '1' THEN
-                check_write <= '0';
-            END IF;
-            
+            signal_running <= signal_running_reg;
+            reset <= reset_reg;
+            wrt <= wrt_reg;
+            state <= next_state;
         END IF;
     END PROCESS;
 
-END ARCHITECTURE rtl;
+    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_out, signal_in, interm_latch)  
+    BEGIN
+        CASE state IS
+            WHEN IDLE =>
+                reset_reg <= '0';
+                signal_running_reg <= '0';
+                wrt_reg <= '0';
+                IF interm_latch(0) = '1' THEN
+                    next_state <= DETECT_START;
+                    signal_running_reg <= '1';
+                ELSE
+                    next_state <= IDLE;
+                END IF;
+
+            WHEN DETECT_START =>
+                IF unsigned(signal_out) > 0 THEN
+                    next_state <= WRITE;
+                ELSE
+                    next_state <= DETECT_START;
+                END IF;
+
+            WHEN WRITE =>
+                wrt_reg <= '1';
+                next_state <= RST;
+
+            WHEN RST =>
+                IF signal_in = '1' THEN
+                    next_state <= IDLE;
+                    signal_running_reg <= '0';
+                    reset_reg <= '1';
+                ELSE 
+                    next_state <= RST;
+                END IF;
+                wrt_reg <= '0';
+
+            WHEN OTHERS =>
+                next_state <= IDLE;
+        END CASE;
+    END PROCESS;
+
+END ARCHITECTURE fsm;

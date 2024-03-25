@@ -44,6 +44,7 @@ ARCHITECTURE rtl OF delay_line IS
 
     SIGNAL unlatched_signal : STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
     SIGNAL latched_once : STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
+    SIGNAL inverted : STD_LOGIC;
 
     COMPONENT carry4
         PORT (
@@ -68,6 +69,8 @@ ARCHITECTURE rtl OF delay_line IS
 	
 BEGIN
 
+    inverted <= NOT trigger;
+
     carry_delay_line : FOR i IN 0 TO stages/4 - 1 GENERATE
         first_carry4 : IF i = 0 GENERATE
         BEGIN
@@ -75,7 +78,7 @@ BEGIN
             PORT MAP(
                 a => "0000",
                 b => "1111",
-                Cin => not trigger,
+                Cin => inverted,
                 Cout_vector => unlatched_signal(3 DOWNTO 0)
             );
         END GENERATE first_carry4;

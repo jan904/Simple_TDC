@@ -77,8 +77,21 @@ ARCHITECTURE rtl OF channel IS
         );
     END COMPONENT uart;
 
+    COMPONENT handle_start IS
+        PORT (
+            clk : IN STD_LOGIC;
+            starting : OUT STD_LOGIC
+        );
+    END COMPONENT handle_start;
+
 BEGIN
     tap_clk <= clk;
+
+    handle_start_inst : handle_start
+    PORT MAP(
+        clk => clk,
+        starting => reset_uart
+    );
 
     delay_line_inst : delay_line
     GENERIC MAP(
