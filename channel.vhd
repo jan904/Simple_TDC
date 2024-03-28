@@ -1,3 +1,18 @@
+-- Top level entity for the project
+--
+-- This module takes the input signal and generates timing information for it. 
+-- The timing information is then encoded into a binary signal and sent to the
+-- UART module for serial output.
+--
+-- Inputs:
+--   clk: The clock signal
+--   signal_in: Trigger signal we want to get timing information on
+--
+-- Outputs:
+--   signal_out: Binary timing information 
+--   serial_out: Serial output of the binary timing information     
+
+
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.std_logic_arith.ALL;
@@ -11,16 +26,18 @@ ENTITY channel IS
         clk : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
         signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-        serial_out : OUT STD_LOGIC
+        serial_out : OUT STD_LOGIC;
+        test : OUT STD_LOGIC;
+        test_2 : IN STD_LOGIC
     );
 END ENTITY channel;
 ARCHITECTURE rtl OF channel IS
 
-    SIGNAL reset_uart : STD_LOGIC;
-    SIGNAL a_reset : STD_LOGIC;
+    SIGNAL reset_after_start : STD_LOGIC;
+    SIGNAL reset_after_signal : STD_LOGIC;
     SIGNAL busy : STD_LOGIC;
     SIGNAL wr_en : STD_LOGIC;
-    SIGNAL n_ones : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
+    SIGNAL therm_code : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL detect_edge : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
     SIGNAL tap_clk : STD_LOGIC;
@@ -47,7 +64,7 @@ ARCHITECTURE rtl OF channel IS
         PORT (
             clk : IN STD_LOGIC;
             thermometer : IN STD_LOGIC_VECTOR((n_bits_therm - 1) DOWNTO 0);
-            count_o : OUT STD_LOGIC_VECTOR(n_bits_bin - 1 DOWNTO 0)
+            count_bin : OUT STD_LOGIC_VECTOR(n_bits_bin - 1 DOWNTO 0)
         );
     END COMPONENT encoder;
 
@@ -58,6 +75,7 @@ ARCHITECTURE rtl OF channel IS
         );
         PORT (
             clock : IN STD_LOGIC;
+            start : IN STD_LOGIC;
             signal_in : IN STD_LOGIC;
             interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
             signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
@@ -85,12 +103,14 @@ ARCHITECTURE rtl OF channel IS
     END COMPONENT handle_start;
 
 BEGIN
+
     tap_clk <= clk;
+    test <= signal_in;
 
     handle_start_inst : handle_start
     PORT MAP(
         clk => clk,
-        starting => reset_uart
+        starting => reset_after_start
     );
 
     delay_line_inst : delay_line
@@ -98,13 +118,14 @@ BEGIN
         stages => carry4_count * 4
     )
     PORT MAP(
-        reset => a_reset,
+        reset => reset_after_signal,
         signal_running => busy,
-        trigger => signal_in,
+        trigger => test_2,
         clock => clk,
         intermediate_signal => detect_edge,
-        therm_code => n_ones
+        therm_code => therm_code
     );
+	 
     detect_signal_inst : detect_signal
     GENERIC MAP(
         stages => carry4_count * 4,
@@ -112,13 +133,15 @@ BEGIN
     )
     PORT MAP(
         clock => clk,
-        signal_in => signal_in,
+        start => reset_after_start,
+        signal_in => test_2,
         interm_latch => detect_edge,
         signal_out => bin_output,
         signal_running => busy,
-        reset => a_reset,
+        reset => reset_after_signal,
         wrt => wr_en
     );
+	 
     encoder_inst : encoder
     GENERIC MAP(
         n_bits_bin => n_output_bits,
@@ -126,15 +149,15 @@ BEGIN
     )
     PORT MAP(
         clk => clk,
-        thermometer => n_ones,
-        count_o => bin_output
+        thermometer => therm_code,
+        count_bin => bin_output
     );
     signal_out <= bin_output;
 
     uart_inst : uart
     PORT MAP(
         clk => clk,
-        rst => reset_uart,
+        rst => reset_after_start,
         we => wr_en,
         din => bin_output,
         tx => serial_out

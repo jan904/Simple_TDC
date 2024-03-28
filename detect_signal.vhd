@@ -22,21 +22,28 @@ END ENTITY detect_signal;
 
 ARCHITECTURE fsm OF detect_signal IS
 
+    -- Define the states of the FSM
     TYPE stype IS (IDLE, DETECT_START, WRITE_FIFO, RST);
     SIGNAL state, next_state : stype;
+
+    -- Signals used to store the values of the signals
     SIGNAL reset_reg, reset_next : STD_LOGIC;
     SIGNAL signal_running_reg, signal_running_next : STD_LOGIC;
     SIGNAL wrt_reg, wrt_next : STD_LOGIC;
 
 BEGIN
+    -- FSM core
     PROCESS(clock)
     BEGIN
         IF rising_edge(clock) THEN
+            -- Reset at start 
             IF start = '1' THEN
                 state <= IDLE;
                 signal_running_reg <= '0';
                 reset_reg <= '0';
                 wrt_reg <= '0';
+
+            -- Update signals
             ELSE
                 signal_running_reg <= signal_running_next;
                 reset_reg <= reset_next;
@@ -46,9 +53,11 @@ BEGIN
         END IF;
     END PROCESS;
 
+    -- FSM logic
     PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_out, signal_in, interm_latch)  
     BEGIN
 
+        -- Default values
         next_state <= state;
         wrt_next <= wrt_reg;
         reset_next <= reset_reg;
@@ -75,7 +84,8 @@ BEGIN
                 next_state <= RST;
 
             WHEN RST =>
-                IF signal_in = '1' THEN
+
+                IF signal_in = '1' or reset_reg = '1' THEN
                     IF reset_reg = '1' THEN
                         next_state <= IDLE;
                         signal_running_next <= '0';

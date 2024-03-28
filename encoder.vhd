@@ -1,37 +1,48 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.ALL;
+-- Thermometer to binary encoder
+--
+-- Inputs:
+--   thermometer: Thermometer code to be encoded
+--   clk : Clock signal
+--
+-- Outputs:
+--   count_bin: Binary encoded thermometer code   
 
-entity encoder is
-    generic (
-        n_bits_bin : positive;
-        n_bits_therm : positive
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
+
+ENTITY encoder IS
+    GENERIC (
+        n_bits_bin : POSITIVE;
+        n_bits_therm : POSITIVE
     );
-    port (
-        clk : in std_logic;
-        thermometer : in std_logic_vector((n_bits_therm-1) downto 0);
-        count_o : out std_logic_vector(n_bits_bin-1 downto 0) 
+    PORT (
+        clk : IN STD_LOGIC;
+        thermometer : IN STD_LOGIC_VECTOR((n_bits_therm - 1) DOWNTO 0);
+        count_bin : OUT STD_LOGIC_VECTOR((n_bits_bin - 1) DOWNTO 0)
     );
-end entity encoder;
+END ENTITY encoder;
 
 
-architecture rtl of encoder is
+ARCHITECTURE rtl OF encoder IS
+BEGIN
 
-begin
-
-    process(clk)	
-        variable count : unsigned(n_bits_bin-1 downto 0) := (others => '0');
-    begin
-        if rising_edge(clk) then
-            count := (others => '0');
-            for i in 0 to n_bits_therm-1 loop
-                if thermometer(i) = '1' then
+    PROCESS (clk)
+        -- Variable to store the count
+        VARIABLE count : unsigned(n_bits_bin - 1 DOWNTO 0); --:= (OTHERS => '0');
+    BEGIN
+        -- Simply loop over the thermometer code and count the number of '1's
+        IF rising_edge(clk) THEN
+            -- Reset the count after each clock cycle
+            count := (OTHERS => '0');
+            FOR i IN 0 TO n_bits_therm - 1 LOOP
+                IF thermometer(i) = '1' THEN
                     count := count + 1;
-                end if;
-            end loop;
-            count_o <= std_logic_vector(count);
+                END IF;
+            END LOOP;
+            -- Assign the count to the output
+            count_bin <= STD_LOGIC_VECTOR(count);
+        END IF;
+    END PROCESS;
 
-        end if;
-    end process;
-
-end architecture rtl;
+END ARCHITECTURE rtl;

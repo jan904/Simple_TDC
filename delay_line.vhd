@@ -40,10 +40,15 @@ ENTITY delay_line IS
         therm_code : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0)
     );
 END delay_line;
+
+
 ARCHITECTURE rtl OF delay_line IS
 
+    -- Raw output of TDL
     SIGNAL unlatched_signal : STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
+    -- Output of first row of FlipFlops
     SIGNAL latched_once : STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
+    -- Inverted trigger signal
     SIGNAL inverted : STD_LOGIC;
 
     COMPONENT carry4
@@ -64,14 +69,19 @@ ARCHITECTURE rtl OF delay_line IS
         );
     END COMPONENT;
 	
+    -- Keep attribute to prevent synthesis tool from optimizing away the signals
 	ATTRIBUTE keep : boolean;
     ATTRIBUTE keep OF unlatched_signal : SIGNAL IS TRUE;
 	
 BEGIN
 
+    -- Invert the trigger signal so the TDL is triggered on a falling edge
     inverted <= NOT trigger;
 
+    -- Instantiate the carry4 cells
     carry_delay_line : FOR i IN 0 TO stages/4 - 1 GENERATE
+
+        -- First cell in the chain. Seperated as it takes the trigger signal as input
         first_carry4 : IF i = 0 GENERATE
         BEGIN
             delayblock : carry4
@@ -83,6 +93,7 @@ BEGIN
             );
         END GENERATE first_carry4;
 
+        -- All other cells in the chain. Input of the carry4 cells is the carry-out of the previous cell
         next_carry4 : IF i > 0 GENERATE
         BEGIN
             delayblock : carry4
@@ -95,8 +106,11 @@ BEGIN
         END GENERATE next_carry4;
     END GENERATE;
 
+    -- Instantiate the FlipFlops
     latch_1 : FOR i IN 0 TO stages - 1 GENERATE
     BEGIN
+
+        -- First row of FlipFlops
         ff1 : fdr
         PORT MAP(
             rst => reset,
@@ -105,11 +119,8 @@ BEGIN
             t => unlatched_signal(i),
             q => latched_once(i)
         );
-    --END GENERATE latch_1;
 
-
-    --latch_2 : FOR i IN 0 TO stages - 1 GENERATE
-    --BEGIN
+        -- Second row of FlipFlops
         ff2 : fdr
         PORT MAP(
             rst => reset,
@@ -120,6 +131,7 @@ BEGIN
         );
     END GENERATE latch_1;
 
+    -- Map output of the first row of FlipFlops to the output. Used for detect signal logic.
     intermediate_signal <= latched_once;
 
 END ARCHITECTURE rtl;

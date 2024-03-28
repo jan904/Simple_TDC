@@ -27,17 +27,21 @@ ENTITY fdr IS
     );
 END fdr;
 
-ARCHITECTURE rtl OF fdr IS
 
+ARCHITECTURE rtl OF fdr IS
 BEGIN
+
     PROCESS (clk, rst)
     BEGIN
+        -- Set output to 0 on reset
         IF rst = '1' THEN
             q <= '0';
+        -- Update output on rising edge of clock if not locked
         ELSIF clk'event AND clk = '1' THEN
             IF lock = '0' THEN
                 q <= t;
             END IF;
         END IF;
     END PROCESS;
+    
 END rtl;

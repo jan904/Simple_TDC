@@ -29,3 +29,4 @@ BEGIN
   Cout <= (a AND b) OR (Cin AND (a XOR b));
   
 END ARCHITECTURE behavioral;
+
