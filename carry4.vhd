@@ -19,7 +19,8 @@ ENTITY carry4 IS
     PORT (
         a, b : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
         Cin : IN STD_LOGIC;
-        Cout_vector : OUT STD_LOGIC_VECTOR(3 DOWNTO 0)
+        Cout_vector : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+        Sum_vector : OUT STD_LOGIC_VECTOR(3 DOWNTO 0)
     );
 END ENTITY carry4;
 
@@ -32,7 +33,8 @@ ARCHITECTURE rtl OF carry4 IS
             a : IN STD_LOGIC;
             b : IN STD_LOGIC;
             Cin : IN STD_LOGIC;
-            Cout : OUT STD_LOGIC
+            Cout : OUT STD_LOGIC;
+            Sum : OUT STD_LOGIC
         );
     END COMPONENT full_add;
 
@@ -52,7 +54,8 @@ BEGIN
             a => a(ii), 
             b => b(ii),
             Cin => carry(ii),
-            Cout => carry(ii+1)
+            Cout => carry(ii+1),
+            Sum => Sum_vector(ii)
         );
     END GENERATE instan_fa;
 
