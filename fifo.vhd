@@ -41,8 +41,8 @@ entity fifo is
          wr : IN  std_logic;
          w_data : IN  std_logic_vector(7 downto 0);
          r_data : out  std_logic_vector(7 downto 0);
-			full: out std_logic;
-			empty: out std_logic
+		 full: out std_logic;
+		 empty: out std_logic
 	);
 end fifo;
 

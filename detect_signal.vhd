@@ -13,6 +13,8 @@ ENTITY detect_signal IS
         signal_in : IN STD_LOGIC;
         interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
         signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+        done_write : IN STD_LOGIC;
+        uart_not_full : IN STD_LOGIC;  
         signal_running : OUT STD_LOGIC;
         reset : OUT STD_LOGIC;
         wrt : OUT STD_LOGIC
@@ -31,6 +33,7 @@ ARCHITECTURE fsm OF detect_signal IS
     SIGNAL signal_running_reg, signal_running_next : STD_LOGIC;
     SIGNAL wrt_reg, wrt_next : STD_LOGIC;
     SIGNAL count, count_reg, count_next : INTEGER range 0 to 1;
+    SIGNAL done_write_reg, done_write_next : STD_LOGIC;
 
 BEGIN
     -- FSM core
@@ -44,6 +47,7 @@ BEGIN
                 reset_reg <= '0';
                 wrt_reg <= '0';
                 count <= 0;
+                done_write_reg <= '0';
 
             -- Update signals
             ELSE
@@ -52,12 +56,13 @@ BEGIN
                 wrt_reg <= wrt_next;
                 state <= next_state;
                 count <= count_next;
+                done_write_reg <= done_write_next;
             END IF;
         END IF;
     END PROCESS;
 
     -- FSM logic
-    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_out, signal_in, interm_latch, count)  
+    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_out, signal_in, interm_latch, count, done_write, done_write_reg)  
     BEGIN
 
         -- Default values
@@ -66,6 +71,7 @@ BEGIN
         reset_next <= reset_reg;
         signal_running_next <= signal_running_reg;
         count_next <= count;
+        done_write_next <= done_write_reg;
 
         CASE state IS
             WHEN IDLE =>
@@ -89,21 +95,27 @@ BEGIN
                 END IF;
 
             WHEN RST =>
-                IF signal_in = '1' or reset_reg = '1' THEN
-                    IF reset_reg = '1' THEN
-                        next_state <= IDLE;
-                        signal_running_next <= '0';
-                        reset_next <= '0';
-                        count_next <= 0;
-                    ELSIF reset_reg = '0' THEN
+                IF done_write = '1' or done_write_reg = '1' THEN
+                    done_write_next <= '1';
+                    IF signal_in = '1' or reset_reg = '1' THEN
+                        IF reset_reg = '1' THEN
+                            next_state <= IDLE;
+                            signal_running_next <= '0';
+                            reset_next <= '0';
+                            count_next <= 0;
+                        ELSIF reset_reg = '0' THEN
+                            next_state <= RST;
+                            reset_next <= '1';
+                        END IF;
+                    ELSE 
                         next_state <= RST;
-                        reset_next <= '1';
                     END IF;
-                ELSE 
+                    wrt_next <= '0';
+                ELSE
                     next_state <= RST;
+                    done_write_next <= '0';
                 END IF;
-                wrt_next <= '0';
-
+                
             WHEN OTHERS =>
                 next_state <= IDLE;
         END CASE;

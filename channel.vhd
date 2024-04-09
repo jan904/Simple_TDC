@@ -15,12 +15,13 @@
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-USE ieee.std_logic_arith.ALL;
+USE ieee.numeric_std.ALL;
 
 ENTITY channel IS
     GENERIC (
         carry4_count : INTEGER := 32;
-        n_output_bits : INTEGER := 8
+        n_output_bits : INTEGER := 8;
+        coarse_bits : INTEGER := 32
     );
     PORT (
         clk : IN STD_LOGIC;
@@ -39,6 +40,11 @@ ARCHITECTURE rtl OF channel IS
     SIGNAL detect_edge : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
     SIGNAL tap_clk : STD_LOGIC;
+    SIGNAL fifo_empty : STD_LOGIC;
+    SIGNAL coarse_count : STD_LOGIC_VECTOR(coarse_bits-1 DOWNTO 0);
+    SIGNAL output : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL wr_en_out : STD_LOGIC;
+    SIGNAL done_writing : STD_LOGIC;
 
     COMPONENT delay_line IS
         GENERIC (
@@ -77,6 +83,8 @@ ARCHITECTURE rtl OF channel IS
             signal_in : IN STD_LOGIC;
             interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
             signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+            done_write : IN STD_LOGIC;
+            uart_not_full : IN STD_LOGIC;
             signal_running : OUT STD_LOGIC;
             reset : OUT STD_LOGIC;
             wrt : OUT STD_LOGIC
@@ -89,6 +97,7 @@ ARCHITECTURE rtl OF channel IS
             rst : IN STD_LOGIC;
             we : IN STD_LOGIC;
             din : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+            empty : OUT STD_LOGIC;
             tx : OUT STD_LOGIC
         );
     END COMPONENT uart;
@@ -100,15 +109,61 @@ ARCHITECTURE rtl OF channel IS
         );
     END COMPONENT handle_start;
 
+    COMPONENT coarse_counter IS
+        GENERIC (
+            coarse_bits : INTEGER
+        );
+        PORT (
+            clk : IN STD_LOGIC;
+            start : IN STD_LOGIC;
+            signal_start : IN STD_LOGIC;
+            signal_done : IN STD_LOGIC;
+            count : OUT STD_LOGIC_VECTOR(coarse_bits-1 DOWNTO 0)
+        );
+    END COMPONENT coarse_counter;
+
+    COMPONENT handle_output IS
+        GENERIC (
+            coarse_bits : INTEGER;
+            fine_bits : INTEGER
+        );
+        PORT (
+            clk : IN STD_LOGIC;
+            start : IN STD_LOGIC;
+            data_coarse : IN STD_LOGIC_VECTOR(coarse_bits-1 DOWNTO 0);
+            data_fine : IN STD_LOGIC_VECTOR(fine_bits-1 DOWNTO 0);
+            wr_en : IN STD_LOGIC;
+            fifo_empty : IN STD_LOGIC;
+            data_out : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+            wr_en_out : OUT STD_LOGIC;
+            done_wr : OUT STD_LOGIC
+        );
+    END COMPONENT handle_output;
+
+
 BEGIN
 
-    tap_clk <= clk;
+    --tap_clk <= clk;
 
     handle_start_inst : handle_start
     PORT MAP(
         clk => clk,
         starting => reset_after_start
     );
+
+
+    coarse_counter_inst : coarse_counter
+    GENERIC MAP(
+        coarse_bits => coarse_bits
+    )
+    PORT MAP(
+        clk => clk,
+        start => reset_after_start,
+        signal_start => busy,
+        signal_done => reset_after_signal,
+        count => coarse_count
+    );
+
 
     delay_line_inst : delay_line
     GENERIC MAP(
@@ -123,6 +178,7 @@ BEGIN
         therm_code => therm_code
     );
 	 
+
     detect_signal_inst : detect_signal
     GENERIC MAP(
         stages => carry4_count * 4,
@@ -134,11 +190,14 @@ BEGIN
         signal_in => signal_in,
         interm_latch => detect_edge,
         signal_out => bin_output,
+        done_write => done_writing,
+        uart_not_full => fifo_empty,
         signal_running => busy,
         reset => reset_after_signal,
         wrt => wr_en
     );
 	 
+
     encoder_inst : encoder
     GENERIC MAP(
         n_bits_bin => n_output_bits,
@@ -151,12 +210,32 @@ BEGIN
     );
     signal_out <= bin_output;
 
+
+    handle_output_inst : handle_output
+    GENERIC MAP(
+        coarse_bits => coarse_bits,
+        fine_bits => n_output_bits
+    )
+    PORT MAP(
+        clk => clk,
+        start => reset_after_start,
+        data_coarse => coarse_count,
+        data_fine => bin_output,
+        wr_en => wr_en,
+        fifo_empty => fifo_empty,
+        data_out => output,
+        wr_en_out => wr_en_out,
+        done_wr => done_writing
+    );
+
+
     uart_inst : uart
     PORT MAP(
         clk => clk,
         rst => reset_after_start,
-        we => wr_en,
-        din => bin_output,
+        we => wr_en_out,
+        din => output,
+        empty => fifo_empty,
         tx => serial_out
     );
         

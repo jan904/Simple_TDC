@@ -45,3 +45,8 @@ BEGIN
     END PROCESS;
     
 END rtl;
+
+--set_max_skew -from [get_pins {delay_line_inst|\carry_delay_line:0:first_carry4:delayblock|carry[1]|combout}] -to [get_pins {delay_line_inst|\carry_delay_line:0:first_carry4:delayblock|carry[2]|dataa}] 1
+--set_max_skew -from [get_pins {delay_line_inst|\carry_delay_line:0:first_carry4:delayblock|carry[1]|combout}] -to [get_pins {delay_line_inst|\carry_delay_line:0:first_carry4:delayblock|carry[2]|datac}] 1
+--set_max_skew -from [get_pins {delay_line_inst|\carry_delay_line:0:first_carry4:delayblock|carry[2]|combout}] -to [get_pins {delay_line_inst|\carry_delay_line:0:first_carry4:delayblock|carry[3]|datad}] 1
+--set_max_skew -from [get_pins {delay_line_inst|\carry_delay_line:0:first_carry4:delayblock|carry[3]|combout}] -to [get_pins {delay_line_inst|\carry_delay_line:0:first_carry4:delayblock|carry[4]|datad}] 1

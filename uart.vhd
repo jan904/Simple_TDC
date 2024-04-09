@@ -36,6 +36,7 @@ entity uart is
          we : IN  std_logic;
          --rx : IN  std_logic;
          tx : out  std_logic;
+         empty : out std_logic;
          --addr : IN  std_logic_vector(3 downto 0);
          din : IN  std_logic_vector(7 downto 0)
          --dout : out  std_logic_vector(7 downto 0);
@@ -97,6 +98,7 @@ end component;
 begin
 
 	rst_n <= not rst;
+    empty <= tx_empty;
 
 	b: BAUDGEN
 	generic map(bdDiv(mhz)) 
