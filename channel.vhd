@@ -25,10 +25,9 @@ ENTITY channel IS
     PORT (
         clk : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
+        clk_out : OUT STD_LOGIC;
         signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-        serial_out : OUT STD_LOGIC;
-        test : OUT STD_LOGIC;
-        test_2 : IN STD_LOGIC
+        serial_out : OUT STD_LOGIC
     );
 END ENTITY channel;
 ARCHITECTURE rtl OF channel IS
@@ -40,7 +39,6 @@ ARCHITECTURE rtl OF channel IS
     SIGNAL therm_code : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL detect_edge : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-    SIGNAL tap_clk : STD_LOGIC;
 
     COMPONENT delay_line IS
         GENERIC (
@@ -104,8 +102,7 @@ ARCHITECTURE rtl OF channel IS
 
 BEGIN
 
-    tap_clk <= clk;
-    test <= signal_in;
+    clk_out <= clk;
 
     handle_start_inst : handle_start
     PORT MAP(
@@ -120,7 +117,7 @@ BEGIN
     PORT MAP(
         reset => reset_after_signal,
         signal_running => busy,
-        trigger => test_2,
+        trigger => signal_in,
         clock => clk,
         intermediate_signal => detect_edge,
         therm_code => therm_code
@@ -134,7 +131,7 @@ BEGIN
     PORT MAP(
         clock => clk,
         start => reset_after_start,
-        signal_in => test_2,
+        signal_in => signal_in,
         interm_latch => detect_edge,
         signal_out => bin_output,
         signal_running => busy,
