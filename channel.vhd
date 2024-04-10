@@ -145,13 +145,14 @@ BEGIN
 
     --tap_clk <= clk;
 
+    -- send reset signal to all components after start
     handle_start_inst : handle_start
     PORT MAP(
         clk => clk,
         starting => reset_after_start
     );
 
-
+    -- count the number of clock cycles
     coarse_counter_inst : coarse_counter
     GENERIC MAP(
         coarse_bits => coarse_bits
@@ -165,6 +166,7 @@ BEGIN
     );
 
 
+    -- delay line itself
     delay_line_inst : delay_line
     GENERIC MAP(
         stages => carry4_count * 4
@@ -179,6 +181,7 @@ BEGIN
     );
 	 
 
+    -- detection logic
     detect_signal_inst : detect_signal
     GENERIC MAP(
         stages => carry4_count * 4,
@@ -198,6 +201,7 @@ BEGIN
     );
 	 
 
+    -- encode the thermometer code into binary
     encoder_inst : encoder
     GENERIC MAP(
         n_bits_bin => n_output_bits,
@@ -208,9 +212,11 @@ BEGIN
         thermometer => therm_code,
         count_bin => bin_output
     );
+
     signal_out <= bin_output;
 
 
+    -- send fine + coarse timing information to UART
     handle_output_inst : handle_output
     GENERIC MAP(
         coarse_bits => coarse_bits,
@@ -229,6 +235,7 @@ BEGIN
     );
 
 
+    -- send the output via UART
     uart_inst : uart
     PORT MAP(
         clk => clk,

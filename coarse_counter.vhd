@@ -1,3 +1,8 @@
+-- Coarse counter for number of clock cycles
+--
+-- This module is a simple counter that counts the number of clock cycles. When an input signal is detected,
+-- the current count is stored in a vector. 
+
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
