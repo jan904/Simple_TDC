@@ -40,6 +40,8 @@ ARCHITECTURE rtl OF channel IS
     SIGNAL detect_edge : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
 
+
+    -- Component declarations
     COMPONENT delay_line IS
         GENERIC (
             stages : POSITIVE
@@ -104,12 +106,14 @@ BEGIN
 
     clk_out <= clk;
 
+    -- send reset signal after start to all components
     handle_start_inst : handle_start
     PORT MAP(
         clk => clk,
         starting => reset_after_start
     );
 
+    -- delay line itself
     delay_line_inst : delay_line
     GENERIC MAP(
         stages => carry4_count * 4
@@ -123,6 +127,7 @@ BEGIN
         therm_code => therm_code
     );
 	 
+    -- logic to detect signal and handle current state of TDC
     detect_signal_inst : detect_signal
     GENERIC MAP(
         stages => carry4_count * 4,
@@ -139,6 +144,7 @@ BEGIN
         wrt => wr_en
     );
 	 
+    -- convert thermometer code to binary
     encoder_inst : encoder
     GENERIC MAP(
         n_bits_bin => n_output_bits,
@@ -151,6 +157,7 @@ BEGIN
     );
     signal_out <= bin_output;
 
+    -- send binary output to UART
     uart_inst : uart
     PORT MAP(
         clk => clk,

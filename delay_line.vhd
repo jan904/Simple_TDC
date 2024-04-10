@@ -4,9 +4,9 @@
 -- The delay line is implemented using a chain of carry4 cells. The 4-bit inputs to 
 -- the carry4 cells are '0000' and '1111', such that the carry-in propagates through
 -- the chain of cells. The carry-in of the first cell is driven by the trigger signal. If a '1' comes in
--- as a trigger, this one propagates through the chain of cells.
--- Each cell has 4 carry-out signals, one for each full adder.
--- One the rising edge of the clock signal, the carry-out signals are latched using a FDR FlipFlop. 
+-- as a trigger, this one propagates through the chain of cells. Similarly, a '0' propagates though the chain of sums.
+-- Each cell has 4 carry-out signals and 4 sum outputs, one for each full adder, respecitvely.
+-- One the rising edge of the clock signal, the sums are latched using a FDR FlipFlop. 
 -- The number of ones in the latched signal indicates the number of stages that the input signal has been 
 -- propagated through and thus gives timing information. The output of the latches should be perfect thermometer code.
 -- The signal is then latched twice for stability reasons.
