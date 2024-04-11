@@ -25,7 +25,7 @@ ENTITY channel IS
     PORT (
         clk : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
-        clk_out : OUT STD_LOGIC;
+        cnt_out : OUT STD_LOGIC;
         signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
         serial_out : OUT STD_LOGIC
     );
@@ -39,6 +39,7 @@ ARCHITECTURE rtl OF channel IS
     SIGNAL therm_code : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL detect_edge : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+    --SIGNAL sync_count : STD_LOGIC;
 
 
     -- Component declarations
@@ -102,9 +103,20 @@ ARCHITECTURE rtl OF channel IS
         );
     END COMPONENT handle_start;
 
+    COMPONENT sync_counter IS
+        PORT (
+            clk : IN STD_LOGIC;
+            cnt : OUT STD_LOGIC
+        );
+    END COMPONENT sync_counter;
+
 BEGIN
 
-    clk_out <= clk;
+    sync_counter_inst : sync_counter
+    PORT MAP(
+        clk => clk,
+        cnt => cnt_out
+    );
 
     -- send reset signal after start to all components
     handle_start_inst : handle_start
