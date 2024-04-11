@@ -15,7 +15,7 @@
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-USE ieee.std_logic_arith.ALL;
+USE ieee.numeric_std.ALL;
 
 ENTITY channel IS
     GENERIC (
@@ -25,17 +25,18 @@ ENTITY channel IS
     PORT (
         clk : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
-        clk_out : OUT STD_LOGIC;
-        signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-        serial_out : OUT STD_LOGIC
+        starting : IN STD_LOGIC;
+        wr_en : OUT STD_LOGIC;
+        signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0)
     );
 END ENTITY channel;
+
+
 ARCHITECTURE rtl OF channel IS
 
-    SIGNAL reset_after_start : STD_LOGIC;
     SIGNAL reset_after_signal : STD_LOGIC;
     SIGNAL busy : STD_LOGIC;
-    SIGNAL wr_en : STD_LOGIC;
+    SIGNAL wr_en_reg : STD_LOGIC;
     SIGNAL therm_code : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL detect_edge : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
@@ -85,33 +86,8 @@ ARCHITECTURE rtl OF channel IS
         );
     END COMPONENT detect_signal;
 
-    COMPONENT uart IS
-        PORT (
-            clk : IN STD_LOGIC;
-            rst : IN STD_LOGIC;
-            we : IN STD_LOGIC;
-            din : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-            tx : OUT STD_LOGIC
-        );
-    END COMPONENT uart;
-
-    COMPONENT handle_start IS
-        PORT (
-            clk : IN STD_LOGIC;
-            starting : OUT STD_LOGIC
-        );
-    END COMPONENT handle_start;
 
 BEGIN
-
-    clk_out <= clk;
-
-    -- send reset signal after start to all components
-    handle_start_inst : handle_start
-    PORT MAP(
-        clk => clk,
-        starting => reset_after_start
-    );
 
     -- delay line itself
     delay_line_inst : delay_line
@@ -135,13 +111,13 @@ BEGIN
     )
     PORT MAP(
         clock => clk,
-        start => reset_after_start,
+        start => starting,
         signal_in => signal_in,
         interm_latch => detect_edge,
         signal_out => bin_output,
         signal_running => busy,
         reset => reset_after_signal,
-        wrt => wr_en
+        wrt => wr_en_reg
     );
 	 
     -- convert thermometer code to binary
@@ -155,16 +131,9 @@ BEGIN
         thermometer => therm_code,
         count_bin => bin_output
     );
-    signal_out <= bin_output;
 
-    -- send binary output to UART
-    uart_inst : uart
-    PORT MAP(
-        clk => clk,
-        rst => reset_after_start,
-        we => wr_en,
-        din => bin_output,
-        tx => serial_out
-    );
+    signal_out <= bin_output;
+    wr_en <= wr_en_reg;
+
         
 END ARCHITECTURE rtl;

@@ -40,7 +40,7 @@ set_global_assignment -name NUM_PARALLEL_PROCESSORS 15
 
 set_global_assignment -name FAMILY "MAX 10"
 set_global_assignment -name DEVICE 10M08SAU169C8G
-set_global_assignment -name TOP_LEVEL_ENTITY channel
+set_global_assignment -name TOP_LEVEL_ENTITY manage_channels
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 23.1STD.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "14:05:14  MARCH 11, 2024"
 set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.0 Standard Edition"
@@ -60,15 +60,6 @@ set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER ON
 set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "12.5 %"
 set_location_assignment PIN_H6 -to clk
-set_location_assignment PIN_A8 -to signal_out[7]
-set_location_assignment PIN_A9 -to signal_out[6]
-set_location_assignment PIN_A11 -to signal_out[5]
-set_location_assignment PIN_A10 -to signal_out[4]
-set_location_assignment PIN_B10 -to signal_out[3]
-set_location_assignment PIN_C9 -to signal_out[2]
-set_location_assignment PIN_C10 -to signal_out[1]
-set_location_assignment PIN_D8 -to signal_out[0]
-set_location_assignment PIN_L12 -to signal_in
 set_global_assignment -name ENABLE_SIGNALTAP ON
 set_global_assignment -name USE_SIGNALTAP_FILE stp2.stp
 set_global_assignment -name ALLOW_REGISTER_RETIMING OFF
@@ -77,43 +68,9 @@ set_global_assignment -name QII_AUTO_PACKED_REGISTERS AUTO
 set_global_assignment -name OPTIMIZE_TIMING "NORMAL COMPILATION"
 set_global_assignment -name PHYSICAL_SYNTHESIS_ASYNCHRONOUS_SIGNAL_PIPELINING ON
 set_global_assignment -name OPTIMIZATION_MODE BALANCED
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_out[7]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_out[6]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_out[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_out[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_out[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_out[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_out[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_out[0]
-set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to signal_in
 set_location_assignment PIN_B4 -to serial_out
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to serial_out
-set_global_assignment -name VHDL_FILE handle_start.vhd
-set_global_assignment -name VHDL_FILE baudPack.vhd
-set_global_assignment -name VHDL_FILE baudgen.vhd
-set_global_assignment -name VHDL_FILE fifo.vhd
-set_global_assignment -name VHDL_FILE uart.vhd
-set_global_assignment -name VHDL_FILE uart_tx.vhd
-set_global_assignment -name SIGNALTAP_FILE stp2.stp
-set_global_assignment -name VHDL_FILE detect_signal.vhd
-set_global_assignment -name VHDL_FILE channel.vhd
-set_global_assignment -name VHDL_FILE encoder.vhd
-set_global_assignment -name VHDL_FILE FDR.vhd
-set_global_assignment -name VHDL_FILE carry4.vhd
-set_global_assignment -name VHDL_FILE full_add.vhd
-set_global_assignment -name VHDL_FILE delay_line.vhd
-set_global_assignment -name SOURCE_FILE db/delay_line.cmp.rdb
-set_global_assignment -name SDC_FILE SDC1.sdc
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to "signal_out[0](n)"
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to test_2
 set_location_assignment LCCOMB_X25_Y9_N16 -to "delay_line:delay_line_inst|carry4:\\carry_delay_line:0:first_carry4:delayblock|carry[1]"
 set_global_assignment -name EDA_NETLIST_WRITER_OUTPUT_DIR simulation/questa -section_id eda_simulation
-set_location_assignment PIN_J12 -to clk_out
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk_out
 set_global_assignment -name SLD_NODE_CREATOR_ID 110 -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_ENTITY_NAME sld_signaltap -section_id auto_signaltap_0
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_clk -to clk -section_id auto_signaltap_0
@@ -180,5 +137,48 @@ set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_COUNTER_PIPELINE=
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_ADVANCED_TRIGGER_ENTITY=basic,1," -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_LEVEL_PIPELINE=1" -section_id auto_signaltap_0
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_ENABLE_ADVANCED_TRIGGER=0" -section_id auto_signaltap_0
+set_global_assignment -name VHDL_FILE /misc/home/mue/hoefer/quartus/simple_delay_line/manage_channels.vhd
+set_global_assignment -name VHDL_FILE handle_start.vhd
+set_global_assignment -name VHDL_FILE baudPack.vhd
+set_global_assignment -name VHDL_FILE baudgen.vhd
+set_global_assignment -name VHDL_FILE fifo.vhd
+set_global_assignment -name VHDL_FILE uart.vhd
+set_global_assignment -name VHDL_FILE uart_tx.vhd
+set_global_assignment -name SIGNALTAP_FILE stp2.stp
+set_global_assignment -name VHDL_FILE detect_signal.vhd
+set_global_assignment -name VHDL_FILE channel.vhd
+set_global_assignment -name VHDL_FILE encoder.vhd
+set_global_assignment -name VHDL_FILE FDR.vhd
+set_global_assignment -name VHDL_FILE carry4.vhd
+set_global_assignment -name VHDL_FILE full_add.vhd
+set_global_assignment -name VHDL_FILE delay_line.vhd
+set_global_assignment -name SOURCE_FILE db/delay_line.cmp.rdb
+set_global_assignment -name SDC_FILE SDC1.sdc
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to serial_out
+set_location_assignment PIN_J12 -to signal_in_1
+set_location_assignment PIN_L12 -to signal_in_2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_in_2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_in_1
+set_location_assignment PIN_A8 -to diff_out[0]
+set_location_assignment PIN_A9 -to diff_out[1]
+set_location_assignment PIN_A11 -to diff_out[2]
+set_location_assignment PIN_A10 -to diff_out[3]
+set_location_assignment PIN_B10 -to diff_out[4]
+set_location_assignment PIN_C9 -to diff_out[5]
+set_location_assignment PIN_C10 -to diff_out[6]
+set_location_assignment PIN_D8 -to diff_out[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to diff_out[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to diff_out[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to diff_out[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to diff_out[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to diff_out[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to diff_out[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to diff_out[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to diff_out[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to diff_out
 set_global_assignment -name SLD_FILE db/stp2_auto_stripped.stp
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
