@@ -26,6 +26,8 @@ ENTITY channel IS
         clk : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
         starting : IN STD_LOGIC;
+        both_busy : IN STD_LOGIC;
+        one_busy : OUT STD_LOGIC;
         wr_en : OUT STD_LOGIC;
         signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0)
     );
@@ -80,6 +82,8 @@ ARCHITECTURE rtl OF channel IS
             signal_in : IN STD_LOGIC;
             interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
             signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+            both_busy : IN STD_LOGIC;
+            one_busy : OUT STD_LOGIC;
             signal_running : OUT STD_LOGIC;
             reset : OUT STD_LOGIC;
             wrt : OUT STD_LOGIC
@@ -115,6 +119,8 @@ BEGIN
         signal_in => signal_in,
         interm_latch => detect_edge,
         signal_out => bin_output,
+        both_busy => both_busy,
+        one_busy => one_busy,
         signal_running => busy,
         reset => reset_after_signal,
         wrt => wr_en_reg

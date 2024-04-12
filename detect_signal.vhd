@@ -13,6 +13,8 @@ ENTITY detect_signal IS
         signal_in : IN STD_LOGIC;
         interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
         signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+        both_busy : IN STD_LOGIC;
+        one_busy : OUT STD_LOGIC; 
         signal_running : OUT STD_LOGIC;
         reset : OUT STD_LOGIC;
         wrt : OUT STD_LOGIC
@@ -30,6 +32,8 @@ ARCHITECTURE fsm OF detect_signal IS
     SIGNAL reset_reg, reset_next : STD_LOGIC;
     SIGNAL signal_running_reg, signal_running_next : STD_LOGIC;
     SIGNAL wrt_reg, wrt_next : STD_LOGIC;
+    SIGNAL count, count_reg, count_next : INTEGER range 0 to 1;
+    SIGNAL done_write_reg, done_write_next : STD_LOGIC;
 
 BEGIN
     -- FSM core
@@ -42,6 +46,7 @@ BEGIN
                 signal_running_reg <= '0';
                 reset_reg <= '0';
                 wrt_reg <= '0';
+                count <= 0;
 
             -- Update signals
             ELSE
@@ -49,12 +54,13 @@ BEGIN
                 reset_reg <= reset_next;
                 wrt_reg <= wrt_next;
                 state <= next_state;
+                count <= count_next;
             END IF;
         END IF;
     END PROCESS;
 
     -- FSM logic
-    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_out, signal_in, interm_latch)  
+    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_out, signal_in, interm_latch, count)  
     BEGIN
 
         -- Default values
@@ -62,34 +68,36 @@ BEGIN
         wrt_next <= wrt_reg;
         reset_next <= reset_reg;
         signal_running_next <= signal_running_reg;
+        count_next <= count;
 
         CASE state IS
             WHEN IDLE =>
-                IF interm_latch(0) = '1' THEN
+                IF signal_in = '0' THEN
                     next_state <= DETECT_START;
-                    signal_running_next <= '1';
                 ELSE
                     next_state <= IDLE;
                 END IF;
                 
             WHEN DETECT_START =>
-                IF unsigned(signal_out) > 0 THEN
-                    next_state <= WRITE_FIFO;
-                ELSE
-                    next_state <= DETECT_START;
-                END IF;
+                signal_running_next <= '1';
+                next_state <= WRITE_FIFO;
 
             WHEN WRITE_FIFO =>
-                wrt_next <= '1';
-                next_state <= RST;
+                IF count = 1 THEN
+                    wrt_next <= '1';
+                    next_state <= RST;
+                ELSE
+                    count_next <= count + 1;
+                    next_state <= WRITE_FIFO;
+                END IF;
 
             WHEN RST =>
-
                 IF signal_in = '1' or reset_reg = '1' THEN
                     IF reset_reg = '1' THEN
                         next_state <= IDLE;
                         signal_running_next <= '0';
                         reset_next <= '0';
+                        count_next <= 0;
                     ELSIF reset_reg = '0' THEN
                         next_state <= RST;
                         reset_next <= '1';
@@ -98,7 +106,7 @@ BEGIN
                     next_state <= RST;
                 END IF;
                 wrt_next <= '0';
-
+                
             WHEN OTHERS =>
                 next_state <= IDLE;
         END CASE;
