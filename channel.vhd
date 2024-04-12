@@ -15,7 +15,7 @@
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-USE ieee.numeric_std.ALL;
+USE ieee.std_logic_arith.ALL;
 
 ENTITY channel IS
     GENERIC (
@@ -25,26 +25,22 @@ ENTITY channel IS
     PORT (
         clk : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
-        starting : IN STD_LOGIC;
-        both_busy : IN STD_LOGIC;
-        one_busy : OUT STD_LOGIC;
-        wr_en : OUT STD_LOGIC;
-        signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0)
+        reset_after_start_out : OUT STD_LOGIC;
+        wr_en_out : OUT STD_LOGIC;
+        signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+        serial_out : OUT STD_LOGIC
     );
 END ENTITY channel;
-
-
 ARCHITECTURE rtl OF channel IS
 
+    SIGNAL reset_after_start : STD_LOGIC;
     SIGNAL reset_after_signal : STD_LOGIC;
     SIGNAL busy : STD_LOGIC;
-    SIGNAL wr_en_reg : STD_LOGIC;
+    SIGNAL wr_en : STD_LOGIC;
     SIGNAL therm_code : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL detect_edge : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
 
-
-    -- Component declarations
     COMPONENT delay_line IS
         GENERIC (
             stages : POSITIVE
@@ -82,18 +78,39 @@ ARCHITECTURE rtl OF channel IS
             signal_in : IN STD_LOGIC;
             interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
             signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-            both_busy : IN STD_LOGIC;
-            one_busy : OUT STD_LOGIC;
             signal_running : OUT STD_LOGIC;
             reset : OUT STD_LOGIC;
             wrt : OUT STD_LOGIC
         );
     END COMPONENT detect_signal;
 
+    COMPONENT uart IS
+        PORT (
+            clk : IN STD_LOGIC;
+            rst : IN STD_LOGIC;
+            we : IN STD_LOGIC;
+            din : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+            tx : OUT STD_LOGIC
+        );
+    END COMPONENT uart;
+
+    COMPONENT handle_start IS
+        PORT (
+            clk : IN STD_LOGIC;
+            starting : OUT STD_LOGIC
+        );
+    END COMPONENT handle_start;
 
 BEGIN
 
-    -- delay line itself
+    handle_start_inst : handle_start
+    PORT MAP(
+        clk => clk,
+        starting => reset_after_start
+    );
+
+    reset_after_start_out <= reset_after_start;
+
     delay_line_inst : delay_line
     GENERIC MAP(
         stages => carry4_count * 4
@@ -107,7 +124,6 @@ BEGIN
         therm_code => therm_code
     );
 	 
-    -- logic to detect signal and handle current state of TDC
     detect_signal_inst : detect_signal
     GENERIC MAP(
         stages => carry4_count * 4,
@@ -115,18 +131,15 @@ BEGIN
     )
     PORT MAP(
         clock => clk,
-        start => starting,
+        start => reset_after_start,
         signal_in => signal_in,
         interm_latch => detect_edge,
         signal_out => bin_output,
-        both_busy => both_busy,
-        one_busy => one_busy,
         signal_running => busy,
         reset => reset_after_signal,
-        wrt => wr_en_reg
+        wrt => wr_en
     );
 	 
-    -- convert thermometer code to binary
     encoder_inst : encoder
     GENERIC MAP(
         n_bits_bin => n_output_bits,
@@ -138,8 +151,16 @@ BEGIN
         count_bin => bin_output
     );
 
-    signal_out <= bin_output;
-    wr_en <= wr_en_reg;
+    uart_inst : uart
+    PORT MAP(
+        clk => clk,
+        rst => reset_after_start,
+        we => wr_en,
+        din => bin_output,
+        tx => serial_out
+    );
 
+    signal_out <= bin_output;
+    wr_en_out <= wr_en;
         
 END ARCHITECTURE rtl;

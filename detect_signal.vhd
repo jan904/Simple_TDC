@@ -13,8 +13,6 @@ ENTITY detect_signal IS
         signal_in : IN STD_LOGIC;
         interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
         signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-        both_busy : IN STD_LOGIC;
-        one_busy : OUT STD_LOGIC; 
         signal_running : OUT STD_LOGIC;
         reset : OUT STD_LOGIC;
         wrt : OUT STD_LOGIC
@@ -33,7 +31,6 @@ ARCHITECTURE fsm OF detect_signal IS
     SIGNAL signal_running_reg, signal_running_next : STD_LOGIC;
     SIGNAL wrt_reg, wrt_next : STD_LOGIC;
     SIGNAL count, count_reg, count_next : INTEGER range 0 to 1;
-    SIGNAL done_write_reg, done_write_next : STD_LOGIC;
 
 BEGIN
     -- FSM core
