@@ -36,6 +36,8 @@ ENTITY delay_line IS
         trigger : IN STD_LOGIC;
         clock : IN STD_LOGIC;
         signal_running : IN STD_LOGIC;
+        zeros : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+        ones : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
         intermediate_signal : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
         therm_code : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0)
     );
@@ -88,8 +90,8 @@ BEGIN
         BEGIN
             delayblock : carry4
             PORT MAP(
-                a => "0000",
-                b => "1111",
+                a => zeros,
+                b => ones,
                 Cin => inverted,
                 Cout_vector => unlatched_signal(3 DOWNTO 0),
                 Sum_vector => sum(3 DOWNTO 0)
@@ -101,8 +103,8 @@ BEGIN
         BEGIN
             delayblock : carry4
             PORT MAP(
-                a => "0000",
-                b => "1111",
+                a => zeros,
+                b => ones,
                 Cin => unlatched_signal((4 * i) - 1),
                 Cout_vector => unlatched_signal((4 * (i + 1)) - 1 DOWNTO (4 * i)),
                 Sum_vector => sum((4 * (i + 1)) - 1 DOWNTO (4 * i))
