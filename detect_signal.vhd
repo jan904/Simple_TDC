@@ -13,6 +13,8 @@ ENTITY detect_signal IS
         signal_in : IN STD_LOGIC;
         interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
         signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+        both_busy : IN STD_LOGIC;
+        one_busy : OUT STD_LOGIC; 
         signal_running : OUT STD_LOGIC;
         reset : OUT STD_LOGIC;
         wrt : OUT STD_LOGIC
@@ -31,6 +33,7 @@ ARCHITECTURE fsm OF detect_signal IS
     SIGNAL signal_running_reg, signal_running_next : STD_LOGIC;
     SIGNAL wrt_reg, wrt_next : STD_LOGIC;
     SIGNAL count, count_reg, count_next : INTEGER range 0 to 1;
+    SIGNAL done_write_reg, done_write_next : STD_LOGIC;
 
 BEGIN
     -- FSM core
@@ -90,11 +93,12 @@ BEGIN
 
             WHEN RST =>
                 IF signal_in = '1' or reset_reg = '1' THEN
-                    IF reset_reg = '1' THEN
+                    IF reset_reg = '1' and both_busy = '1' THEN
                         next_state <= IDLE;
                         signal_running_next <= '0';
                         reset_next <= '0';
                         count_next <= 0;
+                        wrt_next <= '0';
                     ELSIF reset_reg = '0' THEN
                         next_state <= RST;
                         reset_next <= '1';
@@ -102,7 +106,7 @@ BEGIN
                 ELSE 
                     next_state <= RST;
                 END IF;
-                wrt_next <= '0';
+                
                 
             WHEN OTHERS =>
                 next_state <= IDLE;
@@ -112,5 +116,6 @@ BEGIN
     signal_running <= signal_running_reg;
     reset <= reset_reg;
     wrt <= wrt_reg;
+    one_busy <= reset_reg;
 
 END ARCHITECTURE fsm;
