@@ -111,7 +111,6 @@ set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to "signal_out[0](n)"
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to test_2
 set_location_assignment LCCOMB_X25_Y9_N16 -to "delay_line:delay_line_inst|carry4:\\carry_delay_line:0:first_carry4:delayblock|carry[1]"
-set_global_assignment -name EDA_NETLIST_WRITER_OUTPUT_DIR simulation/questa -section_id eda_simulation
 set_location_assignment PIN_J12 -to clk_out
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk_out
 set_global_assignment -name SLD_NODE_CREATOR_ID 110 -section_id auto_signaltap_0
