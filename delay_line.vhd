@@ -36,8 +36,8 @@ ENTITY delay_line IS
         trigger : IN STD_LOGIC;
         clock : IN STD_LOGIC;
         signal_running : IN STD_LOGIC;
-        zeros : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-        ones : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+        ones : IN STD_LOGIC_VECTOR(stages-1 DOWNTO 0);
+        zeros : IN STD_LOGIC_VECTOR(stages-1 DOWNTO 0);
         intermediate_signal : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
         therm_code : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0)
     );
@@ -76,6 +76,8 @@ ARCHITECTURE rtl OF delay_line IS
     -- Keep attribute to prevent synthesis tool from optimizing away the signals
 	ATTRIBUTE keep : boolean;
     ATTRIBUTE keep OF unlatched_signal : SIGNAL IS TRUE;
+    ATTRIBUTE keep OF ones : SIGNAL IS TRUE;
+    ATTRIBUTE keep OF zeros : SIGNAL IS TRUE;
 	
 BEGIN
 
@@ -90,8 +92,8 @@ BEGIN
         BEGIN
             delayblock : carry4
             PORT MAP(
-                a => zeros,
-                b => ones,
+                a => zeros(3 DOWNTO 0),
+                b => ones(3 DOWNTO 0),
                 Cin => inverted,
                 Cout_vector => unlatched_signal(3 DOWNTO 0),
                 Sum_vector => sum(3 DOWNTO 0)
@@ -103,8 +105,8 @@ BEGIN
         BEGIN
             delayblock : carry4
             PORT MAP(
-                a => zeros,
-                b => ones,
+                a => zeros((4*(i+1)) - 1 DOWNTO (4*i)),
+                b => ones((4*(i+1)) - 1 DOWNTO (4*i)),
                 Cin => unlatched_signal((4 * i) - 1),
                 Cout_vector => unlatched_signal((4 * (i + 1)) - 1 DOWNTO (4 * i)),
                 Sum_vector => sum((4 * (i + 1)) - 1 DOWNTO (4 * i))

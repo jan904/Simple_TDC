@@ -25,7 +25,6 @@ ENTITY channel IS
     PORT (
         clk : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
-        adders_in : IN STD_LOGIC;
         clk_out : OUT STD_LOGIC;
         signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
         serial_out : OUT STD_LOGIC
@@ -41,11 +40,16 @@ ARCHITECTURE rtl OF channel IS
     SIGNAL detect_edge : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
 
-    SIGNAL zeros : STD_LOGIC_VECTOR(3 DOWNTO 0);
-    SIGNAL ones : STD_LOGIC_VECTOR(3 DOWNTO 0);
-
+    SIGNAL adders : STD_LOGIC_VECTOR(255 DOWNTO 0) := (OTHERS => '0');
 
     -- Component declarations
+    COMPONENT sap IS
+        PORT (
+            source : OUT STD_LOGIC_VECTOR(255 DOWNTO 0)
+        );
+    END COMPONENT sap;
+
+
     COMPONENT delay_line IS
         GENERIC (
             stages : POSITIVE
@@ -55,8 +59,8 @@ ARCHITECTURE rtl OF channel IS
             trigger : IN STD_LOGIC;
             clock : IN STD_LOGIC;
             signal_running : IN STD_LOGIC;
-            zeros : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-            ones : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+            ones : IN STD_LOGIC_VECTOR(stages-1 DOWNTO 0);
+            zeros : IN STD_LOGIC_VECTOR(stages-1  DOWNTO 0);
             intermediate_signal : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
             therm_code : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0)
         );
@@ -112,15 +116,10 @@ BEGIN
 
     clk_out <= clk;
 
-    PROCESS (clk)
-    BEGIN
-        IF rising_edge(clk) THEN
-            IF adders_in = '1' THEN
-                ones <= (others => '1');
-                zeros <= (others => '0');
-            END IF;
-        END IF;
-    END PROCESS;
+    sap_inst : sap
+    PORT MAP(
+        source => adders
+    );
 
     -- send reset signal after start to all components
     handle_start_inst : handle_start
@@ -139,8 +138,8 @@ BEGIN
         signal_running => busy,
         trigger => signal_in,
         clock => clk,
-        zeros => zeros,
-        ones => ones,
+        zeros => adders(255 DOWNTO 128),
+        ones => adders(127 DOWNTO 0),
         intermediate_signal => detect_edge,
         therm_code => therm_code
     );
