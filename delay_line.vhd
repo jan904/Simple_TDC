@@ -33,10 +33,10 @@ ENTITY delay_line IS
     );
     PORT (
         reset : IN STD_LOGIC;
-        trigger : IN STD_LOGIC;
+        signal_start : IN STD_LOGIC;
+        signal_stop : IN STD_LOGIC;
         clock : IN STD_LOGIC;
         signal_running : IN STD_LOGIC;
-        intermediate_signal : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
         therm_code : OUT STD_LOGIC_VECTOR(stages - 1 DOWNTO 0)
     );
 END delay_line;
@@ -49,8 +49,6 @@ ARCHITECTURE rtl OF delay_line IS
     SIGNAL sum : STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
     -- Output of first row of FlipFlops
     SIGNAL latched_once : STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
-    -- Inverted trigger signal
-    SIGNAL inverted : STD_LOGIC;
 
     COMPONENT carry4
         PORT (
@@ -77,9 +75,6 @@ ARCHITECTURE rtl OF delay_line IS
 	
 BEGIN
 
-    -- Invert the trigger signal so the TDL is triggered on a falling edge
-    inverted <= NOT trigger;
-
     -- Instantiate the carry4 cells
     carry_delay_line : FOR i IN 0 TO stages/4 - 1 GENERATE
 
@@ -90,7 +85,7 @@ BEGIN
             PORT MAP(
                 a => "0000",
                 b => "1111",
-                Cin => inverted,
+                Cin => signal_start,
                 Cout_vector => unlatched_signal(3 DOWNTO 0),
                 Sum_vector => sum(3 DOWNTO 0)
             );
@@ -119,8 +114,8 @@ BEGIN
         PORT MAP(
             rst => reset,
             lock => signal_running,
-            clk => clock,
-            t => sum(i),
+            clk => signal_stop,
+            t => not sum(i),
             q => latched_once(i)
         );
 
@@ -134,8 +129,5 @@ BEGIN
             q => therm_code(i)
         );
     END GENERATE latch_1;
-
-    -- Map output of the first row of FlipFlops to the output. Used for detect signal logic.
-    intermediate_signal <= latched_once;
 
 END ARCHITECTURE rtl;

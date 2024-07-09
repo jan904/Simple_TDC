@@ -11,10 +11,6 @@ ENTITY detect_signal IS
         clock : IN STD_LOGIC;
         start : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
-        interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
-        signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-        both_busy : IN STD_LOGIC;
-        one_busy : OUT STD_LOGIC; 
         signal_running : OUT STD_LOGIC;
         reset : OUT STD_LOGIC;
         wrt : OUT STD_LOGIC
@@ -60,7 +56,7 @@ BEGIN
     END PROCESS;
 
     -- FSM logic
-    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_out, signal_in, interm_latch, count)  
+    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_in, count)  
     BEGIN
 
         -- Default values
@@ -72,7 +68,7 @@ BEGIN
 
         CASE state IS
             WHEN IDLE =>
-                IF signal_in = '0' THEN
+                IF signal_in = '1' THEN
                     next_state <= DETECT_START;
                 ELSE
                     next_state <= IDLE;
@@ -92,8 +88,8 @@ BEGIN
                 END IF;
 
             WHEN RST =>
-                IF signal_in = '1' or reset_reg = '1' THEN
-                    IF reset_reg = '1' and both_busy = '1' THEN
+                IF signal_in = '0' or reset_reg = '1' THEN
+                    IF reset_reg = '1' THEN
                         next_state <= IDLE;
                         signal_running_next <= '0';
                         reset_next <= '0';
@@ -116,6 +112,5 @@ BEGIN
     signal_running <= signal_running_reg;
     reset <= reset_reg;
     wrt <= wrt_reg;
-    one_busy <= reset_reg;
 
 END ARCHITECTURE fsm;
