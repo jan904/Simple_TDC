@@ -11,10 +11,7 @@ ENTITY detect_signal IS
         clock : IN STD_LOGIC;
         start : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
-        interm_latch : IN STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
-        signal_out : IN STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-        both_busy : IN STD_LOGIC;
-        one_busy : OUT STD_LOGIC; 
+        both_finished : IN STD_LOGIC;
         signal_running : OUT STD_LOGIC;
         reset : OUT STD_LOGIC;
         wrt : OUT STD_LOGIC
@@ -25,7 +22,7 @@ END ENTITY detect_signal;
 ARCHITECTURE fsm OF detect_signal IS
 
     -- Define the states of the FSM
-    TYPE stype IS (IDLE, DETECT_START, WRITE_FIFO, RST);
+    TYPE stype IS (IDLE, DETECT_START, WRITE_FIFO, RST_1, RST_2);
     SIGNAL state, next_state : stype;
 
     -- Signals used to store the values of the signals
@@ -33,7 +30,6 @@ ARCHITECTURE fsm OF detect_signal IS
     SIGNAL signal_running_reg, signal_running_next : STD_LOGIC;
     SIGNAL wrt_reg, wrt_next : STD_LOGIC;
     SIGNAL count, count_reg, count_next : INTEGER range 0 to 1;
-    SIGNAL done_write_reg, done_write_next : STD_LOGIC;
 
 BEGIN
     -- FSM core
@@ -60,7 +56,7 @@ BEGIN
     END PROCESS;
 
     -- FSM logic
-    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_out, signal_in, interm_latch, count)  
+    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_in, count, both_finished)  
     BEGIN
 
         -- Default values
@@ -72,7 +68,7 @@ BEGIN
 
         CASE state IS
             WHEN IDLE =>
-                IF signal_in = '0' THEN
+                IF signal_in = '1' THEN
                     next_state <= DETECT_START;
                 ELSE
                     next_state <= IDLE;
@@ -85,29 +81,27 @@ BEGIN
             WHEN WRITE_FIFO =>
                 IF count = 1 THEN
                     wrt_next <= '1';
-                    next_state <= RST;
+                    next_state <= RST_1;
                 ELSE
                     count_next <= count + 1;
                     next_state <= WRITE_FIFO;
                 END IF;
 
-            WHEN RST =>
-                IF signal_in = '1' or reset_reg = '1' THEN
-                    IF reset_reg = '1' and both_busy = '1' THEN
-                        next_state <= IDLE;
-                        signal_running_next <= '0';
-                        reset_next <= '0';
-                        count_next <= 0;
-                        wrt_next <= '0';
-                    ELSIF reset_reg = '0' THEN
-                        next_state <= RST;
-                        reset_next <= '1';
-                    END IF;
-                ELSE 
-                    next_state <= RST;
+            WHEN RST_1 =>
+                IF both_finished = '1' THEN
+                    next_state <= RST_2;
+                    reset_next <= '1';
+                    wrt_next <= '0'; 
+                ELSE
+                    next_state <= RST_1;
                 END IF;
-                
-                
+
+            WHEN RST_2 =>
+                next_state <= IDLE;
+                signal_running_next <= '0';
+                reset_next <= '0';
+                count_next <= 0; 
+
             WHEN OTHERS =>
                 next_state <= IDLE;
         END CASE;
@@ -116,6 +110,5 @@ BEGIN
     signal_running <= signal_running_reg;
     reset <= reset_reg;
     wrt <= wrt_reg;
-    one_busy <= reset_reg;
 
 END ARCHITECTURE fsm;

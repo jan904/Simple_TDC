@@ -87,7 +87,7 @@ end component;
 	signal baudtick: std_logic;
 	signal tx_start: std_logic;
 	signal rx_empty, rx_full: std_logic;
-	signal tx_empty, tx_full: std_logic;
+	signal tx_empty: std_logic;
 	signal rx_rd, rx_wr: std_logic;
 	signal tx_rd, tx_wr: std_logic;
 	signal rx_din, rx_dout: std_logic_vector(7 downto 0);
@@ -115,7 +115,7 @@ begin
 		w_data => din,
 		r_data => tx_dout,
 		empty => tx_empty,
-		full => tx_full
+		full => open
 	);
     
 	tx_start <= not tx_empty;

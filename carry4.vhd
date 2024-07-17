@@ -59,7 +59,6 @@ BEGIN
         );
     END GENERATE instan_fa;
 
-    -- Connect the carry-outs of the full adders to the Cout_vector output
     Cout_vector(0) <= carry(1);
     Cout_vector(1) <= carry(2);
     Cout_vector(2) <= carry(3);
