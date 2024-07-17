@@ -29,6 +29,9 @@ ARCHITECTURE rtl OF manage_write IS
     SIGNAL wr_next, wr_reg : STD_LOGIC;
     SIGNAL finished_next, finished_reg : STD_LOGIC;
     SIGNAL output_next, output_reg : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+    SIGNAL res_1, res_1_next, res_2, res_2_next : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
+
+    SIGNAL idle_count, idle_count_next : INTEGER RANGE 0 TO 100;
 
 BEGIN
 
@@ -40,55 +43,72 @@ BEGIN
                 wr_reg <= '0';
                 finished_reg <= '0';
                 output_reg <= (OTHERS => '0');
+                res_1 <= (OTHERS => '0');
+                res_2 <= (OTHERS => '0');
+                idle_count <= 0;
 
             ELSE
                 finished_reg <= finished_next;
                 wr_reg <= wr_next;
                 output_reg <= output_next;
                 state <= next_state;
+                res_1 <= res_1_next;
+                res_2 <= res_2_next;
+                idle_count <= idle_count_next;
             END IF;
         END IF;
     END PROCESS;
 
-    PROCESS (state, signal_1, signal_2, wr_1, wr_2, finished_reg, wr_reg, output_reg, signal_out_1, signal_out_2)
+    PROCESS (state, signal_1, signal_2, idle_count, wr_1, wr_2, res_1, res_2, finished_reg, wr_reg, output_reg, signal_out_1, signal_out_2)
     BEGIN
 
         next_state <= state;
         wr_next <= wr_reg;
         finished_next <= finished_reg;
         output_next <= output_reg;
+        res_1_next <= res_1;
+        res_2_next <= res_2;
+        idle_count_next <= idle_count;
 
         CASE state IS
             WHEN IDLE =>
-                IF wr_1 = '1' THEN
+                IF wr_1 = '1' and wr_2 = '1' THEN
+                    next_state <= WRITE_1;
+                    res_1_next <= signal_out_1;
+                    res_2_next <= signal_out_2;
+                ELSIF wr_1 = '1' xor wr_2 = '1' THEN
                     next_state <= WAIT_FOR_2;
                 ELSE
                     next_state <= IDLE;
                 END IF;
 
             WHEN WAIT_FOR_2 =>
-                IF wr_2 = '1' THEN
+                IF wr_1 = '1' and wr_2 = '1' THEN
                     next_state <= WRITE_1;
+                    res_1_next <= signal_out_1;
+                    res_2_next <= signal_out_2;
+                ELSIF idle_count = 100 THEN
+                    next_state <= FINISHED_WRT;
                 ELSE
                     next_state <= WAIT_FOR_2;
+                    idle_count_next <= idle_count + 1;
                 END IF;
 
             WHEN WRITE_1 =>
-                output_next <= signal_out_1;
+                output_next <= res_1;
                 wr_next <= '1';
                 next_state <= WRITE_2;
 
             WHEN WRITE_2 =>
-                output_next <= signal_out_2;
+                output_next <= res_2;
                 wr_next <= '1';
-                next_state <= FINISHED_WRT;
+                next_state <= TEST;
 
             WHEN TEST =>
                 wr_next <= '0';
                 next_state <= FINISHED_WRT;
 
             WHEN FINISHED_WRT =>
-                wr_next <= '0';
                 IF (signal_1 = '0' and signal_2 = '0') THEN
                     finished_next <= '1';
                     next_state <= RST;
@@ -98,8 +118,9 @@ BEGIN
 
             WHEN RST =>
                 finished_next <= '0';
-                output_next <= (OTHERS => '0');
+                output_next <= "01010101";
                 next_state <= IDLE;
+                idle_count_next <= 0;
             
             WHEN OTHERS =>
                 next_state <= IDLE;
