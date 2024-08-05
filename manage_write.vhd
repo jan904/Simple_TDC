@@ -74,23 +74,30 @@ BEGIN
             WHEN IDLE =>
                 IF wr_1 = '1' and wr_2 = '1' THEN
                     next_state <= WRITE_1;
+                    --output_next <= "00000001";
                     res_1_next <= signal_out_1;
                     res_2_next <= signal_out_2;
-                ELSIF wr_1 = '1' xor wr_2 = '1' THEN
+                ELSIF wr_1 = '1' and wr_2 = '0' THEN
                     next_state <= WAIT_FOR_2;
+                ELSIF wr_1 = '0' and wr_2 = '1' THEN
+                    next_state <= FINISHED_WRT;
                 ELSE
+                    --output_next <= "11000000";
                     next_state <= IDLE;
                 END IF;
 
             WHEN WAIT_FOR_2 =>
-                IF wr_1 = '1' and wr_2 = '1' THEN
+                IF wr_2 = '1' THEN
                     next_state <= WRITE_1;
+                    --output_next <= "00000001";
                     res_1_next <= signal_out_1;
                     res_2_next <= signal_out_2;
-                ELSIF idle_count = 100 THEN
-                    next_state <= FINISHED_WRT;
+                --ELSIF idle_count = 5 THEN
+                    --output_next <= "00000010";
+                --    next_state <= FINISHED_WRT;
                 ELSE
-                    next_state <= WAIT_FOR_2;
+                    --output_next <= "00000111";
+                    next_state <= FINISHED_WRT;
                     idle_count_next <= idle_count + 1;
                 END IF;
 
@@ -109,6 +116,7 @@ BEGIN
                 next_state <= FINISHED_WRT;
 
             WHEN FINISHED_WRT =>
+                --output_next <= "01000000";
                 IF (signal_1 = '0' and signal_2 = '0') THEN
                     finished_next <= '1';
                     next_state <= RST;

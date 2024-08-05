@@ -4,7 +4,7 @@ USE ieee.numeric_std.ALL;
 
 ENTITY top is
     GENERIC (
-        carry4_count : INTEGER := 32;
+        carry4_count : INTEGER := 35;
         n_output_bits : INTEGER := 8
     );
     PORT (
@@ -83,6 +83,22 @@ ARCHITECTURE rtl of top IS
     );
     END COMPONENT manage_write;
 
+    COMPONENT channel_2 IS
+    GENERIC (
+        carry4_count : INTEGER := 32;
+        n_output_bits : INTEGER := 8
+    );
+    PORT (
+        clk : IN STD_LOGIC;
+        signal_in : IN STD_LOGIC;
+        first_signal : IN STD_LOGIC;
+        starting : IN STD_LOGIC;
+        both_finished : IN STD_LOGIC;
+        wr_en : OUT STD_LOGIC;
+        signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0)
+    );
+    END COMPONENT channel_2;
+
 BEGIN
 
     handle_start_inst : handle_start
@@ -105,7 +121,21 @@ BEGIN
         signal_out => signal_out_1
     );
 
-    channel_2_inst : channel
+    --channel_2_inst : channel
+    --GENERIC MAP (
+    --    carry4_count => carry4_count,
+    --    n_output_bits => n_output_bits
+    --)
+    --PORT MAP (
+    --    clk => clk,
+    --    signal_in => signal_in_2,
+    --    starting => starting,
+    --    both_finished => finished,
+    --    wr_en => wr_en_2,
+    --    signal_out => signal_out_2
+    --);
+
+    channel_2_inst : channel_2
     GENERIC MAP (
         carry4_count => carry4_count,
         n_output_bits => n_output_bits
@@ -113,6 +143,7 @@ BEGIN
     PORT MAP (
         clk => clk,
         signal_in => signal_in_2,
+        first_signal => signal_in_1,
         starting => starting,
         both_finished => finished,
         wr_en => wr_en_2,

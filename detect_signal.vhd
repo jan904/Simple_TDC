@@ -22,7 +22,7 @@ END ENTITY detect_signal;
 ARCHITECTURE fsm OF detect_signal IS
 
     -- Define the states of the FSM
-    TYPE stype IS (IDLE, DETECT_START, WRITE_FIFO, RST_1, RST_2);
+    TYPE stype IS (IDLE, DETECT_START, ENCODE, WRITE_FIFO, RST_1, RST_2);
     SIGNAL state, next_state : stype;
 
     -- Signals used to store the values of the signals
@@ -76,16 +76,19 @@ BEGIN
                 
             WHEN DETECT_START =>
                 signal_running_next <= '1';
+                next_state <= ENCODE;
+
+            WHEN ENCODE =>
                 next_state <= WRITE_FIFO;
 
             WHEN WRITE_FIFO =>
-                IF count = 1 THEN
-                    wrt_next <= '1';
-                    next_state <= RST_1;
-                ELSE
-                    count_next <= count + 1;
-                    next_state <= WRITE_FIFO;
-                END IF;
+                --IF count = 1 THEN
+                wrt_next <= '1';
+                next_state <= RST_1;
+                --ELSE
+                --    count_next <= count + 1;
+                --    next_state <= WRITE_FIFO;
+                --END IF;
 
             WHEN RST_1 =>
                 IF both_finished = '1' THEN

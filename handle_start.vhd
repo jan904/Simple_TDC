@@ -31,6 +31,8 @@ ARCHITECTURE fsm_arch OF handle_start IS
     -- Output signal updated by the state machine
     SIGNAL starting_reg : STD_LOGIC;
 
+    SIGNAL reset_counter, reset_counter_next : INTEGER RANGE 0 TO 50000;
+
 BEGIN
 
     -- fsm core
@@ -39,21 +41,32 @@ BEGIN
         IF rising_edge(clk) THEN
             current_state <= next_state;
             starting <= starting_reg;
+            reset_counter <= reset_counter_next;
         END IF;
     END PROCESS;
 
     -- fsm logic
-    PROCESS (next_state, starting_reg, current_state)
+    PROCESS (starting_reg, current_state, reset_counter)
     BEGIN
+
+        reset_counter_next <= reset_counter;
+
         -- Go to reset_state after starting. Stay in reset_state for one cycle
         -- and send starting signal. Then go to running_state and stay there sending no signal.s
         CASE current_state IS
             WHEN reset_state =>
                 starting_reg <= '1';
+                reset_counter_next <= 0;
                 next_state <= running_state;
             WHEN running_state =>
-                starting_reg <= '0';
-                next_state <= running_state;
+                IF reset_counter = 50000 THEN
+                    starting_reg <= '0';
+                    next_state <= reset_state;
+                ELSE
+                    reset_counter_next <= reset_counter + 1;
+                    starting_reg <= '0';
+                    next_state <= running_state;
+                END IF;
             WHEN OTHERS =>
                 next_state <= reset_state;
         END CASE;

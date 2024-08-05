@@ -41,7 +41,6 @@ ARCHITECTURE rtl OF channel IS
     SIGNAL therm_code : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
 
-
     -- Component declarations
     COMPONENT delay_line IS
         GENERIC (
