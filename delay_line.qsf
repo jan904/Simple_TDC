@@ -88,29 +88,12 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to signal_out[0]
 set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to signal_in
 set_location_assignment PIN_B4 -to serial_out
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to serial_out
-set_global_assignment -name VHDL_FILE handle_start.vhd
-set_global_assignment -name VHDL_FILE baudPack.vhd
-set_global_assignment -name VHDL_FILE baudgen.vhd
-set_global_assignment -name VHDL_FILE fifo.vhd
-set_global_assignment -name VHDL_FILE uart.vhd
-set_global_assignment -name VHDL_FILE uart_tx.vhd
-set_global_assignment -name SIGNALTAP_FILE stp2.stp
-set_global_assignment -name VHDL_FILE detect_signal.vhd
-set_global_assignment -name VHDL_FILE channel.vhd
-set_global_assignment -name VHDL_FILE encoder.vhd
-set_global_assignment -name VHDL_FILE FDR.vhd
-set_global_assignment -name VHDL_FILE carry4.vhd
-set_global_assignment -name VHDL_FILE full_add.vhd
-set_global_assignment -name VHDL_FILE delay_line.vhd
-set_global_assignment -name SOURCE_FILE db/delay_line.cmp.rdb
-set_global_assignment -name SDC_FILE SDC1.sdc
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to "signal_out[0](n)"
 
 set_global_assignment -name EDA_NETLIST_WRITER_OUTPUT_DIR simulation/questa -section_id eda_simulation
-set_global_assignment -name SIGNALTAP_FILE /misc/home/mue/hoefer/quartus/simple_delay_line_single/stp2.stp
 
 set_global_assignment -name TOP_LEVEL_ENTITY channel
 
@@ -274,4 +257,23 @@ set_location_assignment LCCOMB_X29_Y11_N24 -to "delay_line:delay_line_inst|carry
 set_location_assignment LCCOMB_X29_Y11_N26 -to "delay_line:delay_line_inst|carry4:\\carry_delay_line:31:next_carry4:delayblock|carry[2]"
 set_location_assignment LCCOMB_X29_Y11_N28 -to "delay_line:delay_line_inst|carry4:\\carry_delay_line:31:next_carry4:delayblock|carry[3]"
 
+set_global_assignment -name VHDL_FILE /misc/home/mue/hoefer/quartus/simple_delay_line_single/conc_output.vhdl
+set_global_assignment -name VHDL_FILE /misc/home/mue/hoefer/quartus/simple_delay_line_single/coarse_counter.vhdl
+set_global_assignment -name VHDL_FILE handle_start.vhd
+set_global_assignment -name VHDL_FILE baudPack.vhd
+set_global_assignment -name VHDL_FILE baudgen.vhd
+set_global_assignment -name VHDL_FILE fifo.vhd
+set_global_assignment -name VHDL_FILE uart.vhd
+set_global_assignment -name VHDL_FILE uart_tx.vhd
+set_global_assignment -name SIGNALTAP_FILE stp2.stp
+set_global_assignment -name VHDL_FILE detect_signal.vhd
+set_global_assignment -name VHDL_FILE channel.vhd
+set_global_assignment -name VHDL_FILE encoder.vhd
+set_global_assignment -name VHDL_FILE FDR.vhd
+set_global_assignment -name VHDL_FILE carry4.vhd
+set_global_assignment -name VHDL_FILE full_add.vhd
+set_global_assignment -name VHDL_FILE delay_line.vhd
+set_global_assignment -name SOURCE_FILE db/delay_line.cmp.rdb
+set_global_assignment -name SDC_FILE SDC1.sdc
+set_global_assignment -name SIGNALTAP_FILE /misc/home/mue/hoefer/quartus/simple_delay_line_single/stp2.stp
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
