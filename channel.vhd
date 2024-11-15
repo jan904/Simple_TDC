@@ -19,7 +19,7 @@ USE ieee.std_logic_arith.ALL;
 
 ENTITY channel IS
     GENERIC (
-        carry4_count : INTEGER := 32;
+        carry4_count : INTEGER := 64;
         n_output_bits : INTEGER := 8;
         coarse_bits : INTEGER := 8
     );
@@ -131,15 +131,15 @@ BEGIN
         starting => reset_after_start
     );
 
-    coarse_counter_inst : coarse_counter
-    GENERIC MAP(
-        coarse_bits => coarse_bits
-    )
-    PORT MAP(
-        clk => clk,
-        reset => reset_after_start,
-        count => coarse_count
-    );
+    --coarse_counter_inst : coarse_counter
+    --GENERIC MAP(
+    --    coarse_bits => coarse_bits
+    --)
+    --PORT MAP(
+    --   clk => clk,
+    --    reset => reset_after_start,
+    --    count => coarse_count
+    --);
     
 
     delay_line_inst : delay_line
@@ -180,19 +180,19 @@ BEGIN
     );
     signal_out <= bin_output;
 
-    conc_output_inst : conc_output
-    GENERIC MAP(
-        coarse_bits => coarse_bits
-    )
-    PORT MAP(
-        clk => clk,
-        rst => reset_after_start,
-        we => wr_en,
-        fine_in => bin_output,
-        coarse_in => coarse_count,
-        we_out => open,
-        data_out => open
-    );
+    --conc_output_inst : conc_output
+    --GENERIC MAP(
+    --    coarse_bits => coarse_bits
+    --)
+    --PORT MAP(
+    --    clk => clk,
+    --    rst => reset_after_start,
+    --    we => wr_en,
+    --    fine_in => bin_output,
+    --    coarse_in => coarse_count,
+    --    we_out => open,
+    --    data_out => open
+    --);
 
     uart_inst : uart
     PORT MAP(
