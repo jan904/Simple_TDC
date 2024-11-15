@@ -20,8 +20,7 @@ USE ieee.std_logic_arith.ALL;
 ENTITY channel IS
     GENERIC (
         carry4_count : INTEGER := 72;
-        n_output_bits : INTEGER := 9;
-        coarse_bits : INTEGER := 8
+        n_output_bits : INTEGER := 9
     );
     PORT (
         clk : IN STD_LOGIC;
@@ -30,6 +29,8 @@ ENTITY channel IS
         serial_out : OUT STD_LOGIC
     );
 END ENTITY channel;
+
+
 ARCHITECTURE rtl OF channel IS
 
     SIGNAL reset_after_start : STD_LOGIC;
@@ -38,34 +39,7 @@ ARCHITECTURE rtl OF channel IS
     SIGNAL wr_en : STD_LOGIC;
     SIGNAL therm_code : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-    SIGNAL coarse_count : STD_LOGIC_VECTOR(coarse_bits - 1 DOWNTO 0);
     SIGNAL output : STD_LOGIC_VECTOR(7 DOWNTO 0);
-
-    COMPONENT coarse_counter IS
-        GENERIC (
-            coarse_bits : INTEGER
-        );
-        PORT (
-            clk : IN STD_LOGIC;
-            reset : IN STD_LOGIC;
-            count : OUT STD_LOGIC_VECTOR(coarse_bits - 1 DOWNTO 0)
-        );
-    END COMPONENT coarse_counter;
-
-    COMPONENT conc_output IS
-        GENERIC (
-            coarse_bits : INTEGER
-        );
-        PORT (
-            clk : IN STD_LOGIC;
-            rst : IN STD_LOGIC;
-            we : IN STD_LOGIC;
-            fine_in : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-            coarse_in : IN STD_LOGIC_VECTOR(coarse_bits - 1 DOWNTO 0);
-            we_out : OUT STD_LOGIC;
-            data_out : OUT STD_LOGIC_VECTOR(7 DOWNTO 0)
-        );
-    END COMPONENT conc_output;
 
     COMPONENT delay_line IS
         GENERIC (
@@ -134,17 +108,6 @@ BEGIN
         starting => reset_after_start
     );
 
-    --coarse_counter_inst : coarse_counter
-    --GENERIC MAP(
-    --    coarse_bits => coarse_bits
-    --)
-    --PORT MAP(
-    --   clk => clk,
-    --    reset => reset_after_start,
-    --    count => coarse_count
-    --);
-    
-
     delay_line_inst : delay_line
     GENERIC MAP(
         stages => carry4_count * 4
@@ -183,21 +146,8 @@ BEGIN
         thermometer => therm_code,
         count_bin => bin_output
     );
-    signal_out <= bin_output;
 
-    --conc_output_inst : conc_output
-    --GENERIC MAP(
-    --    coarse_bits => coarse_bits
-    --)
-    --PORT MAP(
-    --    clk => clk,
-    --    rst => reset_after_start,
-    --    we => wr_en,
-    --    fine_in => bin_output,
-    --    coarse_in => coarse_count,
-    --    we_out => open,
-    --    data_out => open
-    --);
+    signal_out <= bin_output;
 
     uart_inst : uart
     PORT MAP(
