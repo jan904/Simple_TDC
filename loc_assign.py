@@ -1,7 +1,7 @@
-n_carry4 = 63
+n_carry4 = 72
 
 with open('loc_assign.txt', 'w') as f:
-    y = 16
+    y = 20
     n = 0
     for i in range(4*n_carry4):
 
@@ -19,7 +19,7 @@ with open('loc_assign.txt', 'w') as f:
             n += 2
 
 
-    y = 16
+    y = 20
     n = 1
     for i in range(4*n_carry4):
         

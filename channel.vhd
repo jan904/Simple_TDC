@@ -19,8 +19,8 @@ USE ieee.std_logic_arith.ALL;
 
 ENTITY channel IS
     GENERIC (
-        carry4_count : INTEGER := 64;
-        n_output_bits : INTEGER := 8;
+        carry4_count : INTEGER := 72;
+        n_output_bits : INTEGER := 9;
         coarse_bits : INTEGER := 8
     );
     PORT (
@@ -199,7 +199,7 @@ BEGIN
         clk => clk,
         rst => reset_after_start,
         we => wr_en,
-        din => bin_output,
+        din => bin_output(8 DOWNTO 1),
         tx => serial_out
     );
         
