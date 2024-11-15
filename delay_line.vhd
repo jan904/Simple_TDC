@@ -45,7 +45,6 @@ ARCHITECTURE rtl OF delay_line IS
 
     -- Raw output of TDL
     SIGNAL unlatched_signal : STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
-    SIGNAL sum : STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
     -- Output of first row of FlipFlops
     SIGNAL latched_once : STD_LOGIC_VECTOR(stages - 1 DOWNTO 0);
 
@@ -84,7 +83,6 @@ ARCHITECTURE rtl OF delay_line IS
     -- Keep attribute to prevent synthesis tool from optimizing away the signals
 	ATTRIBUTE keep : boolean;
     ATTRIBUTE keep OF unlatched_signal : SIGNAL IS TRUE;
-	--ATTRIBUTE keep OF sum : SIGNAL IS TRUE;
     ATTRIBUTE keep OF a : SIGNAL IS TRUE;
     ATTRIBUTE keep OF b : SIGNAL IS TRUE;
 	
@@ -93,39 +91,6 @@ BEGIN
     a <= '0';
     b <= '1';
    
-    -- Instantiate the carry4 cells
-    --carry_delay_line : FOR i IN 0 TO stages/4 - 1 GENERATE
-
-        -- First cell in the chain. Seperated as it takes the trigger signal as input
-    --    first_carry4 : IF i = 0 GENERATE
-    --    BEGIN
-    --        delayblock : carry4
-    --        PORT MAP(
-    --            a => "0000",
-    --            b => "1111",
-    --            Cin => trigger,
-    --            Cout_vector => unlatched_signal(3 DOWNTO 0),
-    --            Sum_vector => sum(3 DOWNTO 0)
-    --        );
-    --    END GENERATE first_carry4;
-
-        -- All other cells in the chain. Input of the carry4 cells is the carry-out of the previous cell
-    --    next_carry4 : IF i > 0 GENERATE
-    --    BEGIN
-    --        delayblock : carry4
-    --        PORT MAP(
-    --            a => (OTHERS => '0'),
-    --            b => "1111",
-    --            Cin => unlatched_signal((4 * i) - 1),
-    --            Cout_vector => unlatched_signal((4 * (i + 1)) - 1 DOWNTO (4 * i)),
-    --            Sum_vector => sum((4 * (i + 1)) - 1 DOWNTO (4 * i))
-    --        );
-    --    END GENERATE next_carry4;
-        
-    --END GENERATE carry_delay_line;
-
-
-
     inst_delay_line : FOR ii IN 0 TO stages - 1 GENERATE
 
         first_fa : IF ii = 0 GENERATE
@@ -135,7 +100,7 @@ BEGIN
                 b => b,
                 Cin => trigger,
                 Cout => unlatched_signal(ii),
-                Sum => sum(ii)
+                Sum => open
             );
         END GENERATE first_fa;
 
@@ -146,7 +111,7 @@ BEGIN
                 b => b,
                 Cin => unlatched_signal(ii - 1),
                 Cout => unlatched_signal(ii),
-                Sum => sum(ii)
+                Sum => open
             );
         END GENERATE next_fa;
     

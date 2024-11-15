@@ -39,6 +39,7 @@ ARCHITECTURE rtl OF channel IS
     SIGNAL therm_code : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
     SIGNAL coarse_count : STD_LOGIC_VECTOR(coarse_bits - 1 DOWNTO 0);
+    SIGNAL output : STD_LOGIC_VECTOR(7 DOWNTO 0);
 
     COMPONENT coarse_counter IS
         GENERIC (
@@ -100,7 +101,9 @@ ARCHITECTURE rtl OF channel IS
             clock : IN STD_LOGIC;
             start : IN STD_LOGIC;
             signal_in : IN STD_LOGIC;
+            d_in : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
             signal_running : OUT STD_LOGIC;
+            d_out : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
             reset : OUT STD_LOGIC;
             wrt : OUT STD_LOGIC
         );
@@ -163,7 +166,9 @@ BEGIN
         clock => clk,
         start => reset_after_start,
         signal_in => signal_in,
+        d_in => bin_output,
         signal_running => busy,
+        d_out => output,
         reset => reset_after_signal,
         wrt => wr_en
     );
@@ -199,7 +204,7 @@ BEGIN
         clk => clk,
         rst => reset_after_start,
         we => wr_en,
-        din => bin_output(8 DOWNTO 1),
+        din => output,
         tx => serial_out
     );
         
