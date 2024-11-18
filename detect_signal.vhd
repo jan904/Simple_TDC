@@ -12,8 +12,8 @@ ENTITY detect_signal IS
         start : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
         d_in : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
+        written : IN STD_LOGIC;
         signal_running : OUT STD_LOGIC;
-        d_out : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
         reset : OUT STD_LOGIC;
         wrt : OUT STD_LOGIC
     );
@@ -30,7 +30,6 @@ ARCHITECTURE fsm OF detect_signal IS
     SIGNAL reset_reg, reset_next : STD_LOGIC;
     SIGNAL signal_running_reg, signal_running_next : STD_LOGIC;
     SIGNAL wrt_reg, wrt_next : STD_LOGIC;
-    SIGNAL d_out_reg, d_out_next : STD_LOGIC_VECTOR(7 DOWNTO 0);
     SIGNAL count, count_reg, count_next : INTEGER range 0 to 2;
 
 BEGIN
@@ -44,7 +43,6 @@ BEGIN
                 signal_running_reg <= '0';
                 reset_reg <= '0';
                 wrt_reg <= '0';
-                d_out_reg <= (OTHERS => '0');
                 count <= 0;
 
             -- Update signals
@@ -52,7 +50,6 @@ BEGIN
                 signal_running_reg <= signal_running_next;
                 reset_reg <= reset_next;
                 wrt_reg <= wrt_next;
-                d_out_reg <= d_out_next;
                 state <= next_state;
                 count <= count_next;
             END IF;
@@ -60,7 +57,7 @@ BEGIN
     END PROCESS;
 
     -- FSM logic
-    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_in, count, d_in, d_out_reg)  
+    PROCESS (state, signal_running_reg, wrt_reg, reset_reg, signal_in, count, d_in, written)  
     BEGIN
 
         -- Default values
@@ -68,7 +65,6 @@ BEGIN
         wrt_next <= wrt_reg;
         reset_next <= reset_reg;
         signal_running_next <= signal_running_reg;
-        d_out_next <= d_out_reg;
         count_next <= count;
 
         CASE state IS
@@ -85,17 +81,18 @@ BEGIN
 
             WHEN WRITE_FIFO =>
                 IF count = 1 THEN
-                    d_out_next <= "0000000" & d_in(8);
                     wrt_next <= '1';
                     count_next <= count + 1;
                     next_state <= WRITE_FIFO;
-                ELSIF count = 2 THEN
-                    d_out_next <= d_in(7 DOWNTO 0);
-                    wrt_next <= '1';
-                    next_state <= RST;
                 ELSIF count = 0 THEN
                     count_next <= count + 1;
                     next_state <= WRITE_FIFO;
+                ELSIF count = 2 THEN
+                    IF written = '1' THEN
+                        next_state <= RST;
+                    ELSE
+                        next_state <= WRITE_FIFO;
+                    END IF;
                 ELSE
                     next_state <= RST;
                 END IF;
@@ -124,7 +121,6 @@ BEGIN
     signal_running <= signal_running_reg;
     reset <= reset_reg;
     wrt <= wrt_reg;
-    d_out <= d_out_reg;
 
 END ARCHITECTURE fsm;
 

@@ -25,21 +25,21 @@ ENTITY channel IS
     PORT (
         clk : IN STD_LOGIC;
         signal_in : IN STD_LOGIC;
+        start_reset : IN STD_LOGIC;
+        channel_written : IN STD_LOGIC;
         signal_out : OUT STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-        serial_out : OUT STD_LOGIC
+        wr_en_out : OUT STD_LOGIC
     );
 END ENTITY channel;
 
 
 ARCHITECTURE rtl OF channel IS
 
-    SIGNAL reset_after_start : STD_LOGIC;
     SIGNAL reset_after_signal : STD_LOGIC;
     SIGNAL busy : STD_LOGIC;
     SIGNAL wr_en : STD_LOGIC;
     SIGNAL therm_code : STD_LOGIC_VECTOR(carry4_count * 4 - 1 DOWNTO 0);
     SIGNAL bin_output : STD_LOGIC_VECTOR(n_output_bits - 1 DOWNTO 0);
-    SIGNAL output : STD_LOGIC_VECTOR(7 DOWNTO 0);
 
     COMPONENT delay_line IS
         GENERIC (
@@ -76,37 +76,14 @@ ARCHITECTURE rtl OF channel IS
             start : IN STD_LOGIC;
             signal_in : IN STD_LOGIC;
             d_in : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
+            written : IN STD_LOGIC;
             signal_running : OUT STD_LOGIC;
-            d_out : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
             reset : OUT STD_LOGIC;
             wrt : OUT STD_LOGIC
         );
     END COMPONENT detect_signal;
 
-    COMPONENT uart IS
-        PORT (
-            clk : IN STD_LOGIC;
-            rst : IN STD_LOGIC;
-            we : IN STD_LOGIC;
-            din : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
-            tx : OUT STD_LOGIC
-        );
-    END COMPONENT uart;
-
-    COMPONENT handle_start IS
-        PORT (
-            clk : IN STD_LOGIC;
-            starting : OUT STD_LOGIC
-        );
-    END COMPONENT handle_start;
-
 BEGIN
-
-    handle_start_inst : handle_start
-    PORT MAP(
-        clk => clk,
-        starting => reset_after_start
-    );
 
     delay_line_inst : delay_line
     GENERIC MAP(
@@ -127,13 +104,13 @@ BEGIN
     )
     PORT MAP(
         clock => clk,
-        start => reset_after_start,
+        start => start_reset,
         signal_in => signal_in,
         d_in => bin_output,
+        written => channel_written,
         signal_running => busy,
-        d_out => output,
         reset => reset_after_signal,
-        wrt => wr_en
+        wrt => wr_en_out
     );
 	 
     encoder_inst : encoder
@@ -148,14 +125,5 @@ BEGIN
     );
 
     signal_out <= bin_output;
-
-    uart_inst : uart
-    PORT MAP(
-        clk => clk,
-        rst => reset_after_start,
-        we => wr_en,
-        din => output,
-        tx => serial_out
-    );
         
 END ARCHITECTURE rtl;
