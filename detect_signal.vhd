@@ -30,7 +30,7 @@ ARCHITECTURE fsm OF detect_signal IS
     SIGNAL reset_reg, reset_next : STD_LOGIC;
     SIGNAL signal_running_reg, signal_running_next : STD_LOGIC;
     SIGNAL wrt_reg, wrt_next : STD_LOGIC;
-    SIGNAL count, count_reg, count_next : INTEGER range 0 to 2;
+    SIGNAL count, count_reg, count_next : INTEGER range 0 to 4;
 
 BEGIN
     -- FSM core
@@ -80,19 +80,25 @@ BEGIN
                 next_state <= WRITE_FIFO;
 
             WHEN WRITE_FIFO =>
-                IF count = 1 THEN
+                IF count = 3 THEN
                     wrt_next <= '1';
                     count_next <= count + 1;
                     next_state <= WRITE_FIFO;
                 ELSIF count = 0 THEN
                     count_next <= count + 1;
                     next_state <= WRITE_FIFO;
-                ELSIF count = 2 THEN
+                ELSIF count = 4 THEN
                     IF written = '1' THEN
                         next_state <= RST;
                     ELSE
                         next_state <= WRITE_FIFO;
                     END IF;
+                ELSIF count = 1 THEN
+                    count_next <= count + 1;
+                    next_state <= WRITE_FIFO;
+                ELSIF count = 2 THEN
+                    count_next <= count + 1;
+                    next_state <= WRITE_FIFO;
                 ELSE
                     next_state <= RST;
                 END IF;

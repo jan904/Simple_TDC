@@ -77,7 +77,7 @@ BEGIN
 
             WHEN WRITE_FIRST_BYTE =>
                 IF fifo_full = '0' THEN
-                    fifo_data_next <= data_reg(7 DOWNTO 0);
+                    fifo_data_next <= data_reg(15 DOWNTO 8);
                     written_channels_next(channel_reg) <= '1';
                     wr_next <= '1';
                     next_state <= WRITE_SECOND_BYTE;
@@ -87,7 +87,7 @@ BEGIN
 
             WHEN WRITE_SECOND_BYTE =>
                 IF fifo_full = '0' THEN
-                    fifo_data_next <= data_reg(15 DOWNTO 8);
+                    fifo_data_next <= data_reg(7 DOWNTO 0);
                     wr_next <= '1';
                     channel_next <= (channel_reg + 1) mod 4;
                     next_state <= IDLE;

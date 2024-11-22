@@ -41,7 +41,7 @@ with open('loc_assign.txt', 'w') as f:
         else: 
             node_name = 'next'
             #text = 'set_location_assignment LCCOMB_X17_Y' + str(y) +'_N' + str(n) + ' -to "delay_line:delay_line_inst|carry4:\\\carry_delay_line:' + str(i) + ':' + node_name + '_carry4:delayblock|carry[' + str(j) + ']" \n'
-        text = 'set_location_assignment LCCOMB_X14_Y' + str(y) +'_N' + str(n) + ' -to "channel:channel_inst_2|delay_line:delay_line_inst|unlatched_signal[' + str(i) + ']" \n'
+        text = 'set_location_assignment LCCOMB_X15_Y' + str(y) +'_N' + str(n) + ' -to "channel:channel_inst_2|delay_line:delay_line_inst|unlatched_signal[' + str(i) + ']" \n'
         f.write(text)
         if n == 30: 
             y -= 1
@@ -54,7 +54,7 @@ with open('loc_assign.txt', 'w') as f:
     n = 1
     for i in range(4*n_carry4):
         
-        text_ = 'set_location_assignment FF_X14_Y' + str(y) +'_N' + str(n) + ' -to "channel:channel_inst_2|delay_line:delay_line_inst|fdr:\\\latch_1:' + str(i) + ':ff1|q" \n'
+        text_ = 'set_location_assignment FF_X15_Y' + str(y) +'_N' + str(n) + ' -to "channel:channel_inst_2|delay_line:delay_line_inst|fdr:\\\latch_1:' + str(i) + ':ff1|q" \n'
         f.write(text_)
         
         if n == 31:
@@ -104,7 +104,7 @@ with open('loc_assign.txt', 'w') as f:
         else: 
             node_name = 'next'
             #text = 'set_location_assignment LCCOMB_X17_Y' + str(y) +'_N' + str(n) + ' -to "delay_line:delay_line_inst|carry4:\\\carry_delay_line:' + str(i) + ':' + node_name + '_carry4:delayblock|carry[' + str(j) + ']" \n'
-        text = 'set_location_assignment LCCOMB_X29_Y' + str(y) +'_N' + str(n) + ' -to "channel:channel_inst_4|delay_line:delay_line_inst|unlatched_signal[' + str(i) + ']" \n'
+        text = 'set_location_assignment LCCOMB_X28_Y' + str(y) +'_N' + str(n) + ' -to "channel:channel_inst_4|delay_line:delay_line_inst|unlatched_signal[' + str(i) + ']" \n'
         f.write(text)
         if n == 30: 
             y -= 1
@@ -117,7 +117,7 @@ with open('loc_assign.txt', 'w') as f:
     n = 1
     for i in range(4*n_carry4):
         
-        text_ = 'set_location_assignment FF_X29_Y' + str(y) +'_N' + str(n) + ' -to "channel:channel_inst_4|delay_line:delay_line_inst|fdr:\\\latch_1:' + str(i) + ':ff1|q" \n'
+        text_ = 'set_location_assignment FF_X28_Y' + str(y) +'_N' + str(n) + ' -to "channel:channel_inst_4|delay_line:delay_line_inst|fdr:\\\latch_1:' + str(i) + ':ff1|q" \n'
         f.write(text_)
         
         if n == 31:
